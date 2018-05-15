@@ -1,7 +1,6 @@
 import React from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 import './NewsCard.css';
-import Auth from '../Auth/Auth';
 
 class NewsCard extends React.Component {
 

@@ -8,12 +8,22 @@ class NewsPanel extends React.Component {
     this.state = { news: null };
   }
 
+  handleScroll() {
+    const scrollY = window.scrollY
+        || window.pageYOffset
+        || document.documentElement.scrollYTop;
+    if ((window.innerHeight + scrollY) >= (document.body.offsetHeight - 50)) {
+      this.loadMoreNews();
+    }
+  }
+
   componentDidMount(){
     this.loadMoreNews();
+    window.addEventListener('scroll', () => this.handleScroll());
   }
 
   loadMoreNews() {
-    const news_url = 'http://' + window.location.hostname + ':3000' + '/news';
+    const news_url = 'http://localhost:3000/news';
     const request = new Request(news_url, {method:'GET', cache:false});
 
     fetch(request)
@@ -28,7 +38,7 @@ class NewsPanel extends React.Component {
   renderNews() {
     const news_list = this.state.news.map(news => {
       return (
-        <a className = 'list-group-item' key = {news.digest} href = '#'>
+        <a className = 'list-group-item' key = {news.digest} >
           <NewsCard news = {news} />
         </a>
       );
