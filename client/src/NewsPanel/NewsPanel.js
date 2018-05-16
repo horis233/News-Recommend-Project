@@ -1,6 +1,8 @@
 import React from 'react';
 import './NewsPanel.css';
 import NewsCard from '../NewsCard/NewsCard';
+import _ from 'lodash';
+
 
 class NewsPanel extends React.Component {
   constructor() {
@@ -19,6 +21,7 @@ class NewsPanel extends React.Component {
 
   componentDidMount(){
     this.loadMoreNews();
+    this.loadMoreNews = _.debounce(this.loadMoreNews, 1000);
     window.addEventListener('scroll', () => this.handleScroll());
   }
 
