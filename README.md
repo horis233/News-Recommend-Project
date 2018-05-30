@@ -352,9 +352,161 @@ app.use(express.static(path.join(__dirname, '../client/build/static')));
 ```
 npm run build
 ```
+- Express Static : Find the image **** Find Bug!!!!! -> missing:  '/static'
+```js
+app.use('/static', 
+    express.static(path.join(__dirname, '../client/build/static')));
+```
+- Client Webpack: Build a build folder for server to use
+```
+npm run build
+```
+* static - css
+* static - js
+- Error Handler
+```js
+app.use(function(req, res, next) {
+  res.status(404);
+});
+```
+- package.json : change start
+```json
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+```
+## Server - Routes/index.js receive index.html from build
+- Since init run the '/', redirect to the routes/ index.js
+```
+app.use('/', index);
+```
+- index.js : send index.html from build to server side
+* Get home page!
+```js
+var express = require('express');
+var router = express.Router();
+var path = require('path';)
+router.get('/', function(req, res, next) {
+  res.sendFile("index.html", 
+  { root: path.join(__dirname, '../../client/build')});
+});
+module.exports = router;
+```
+- bin -> www : Place for init the App.
+## restAPI for sending backend data from server
+### News Routes
+- In routes/news.js
+```
+touch server/routes/news.js
+```
+- Give a mock data here and send as a JSON file
+```js
+var express = require('express');
+var router = express.Router();
+router.get('/', function(req, res, next) {
+  news = [
+    .....DATA
+  ];
+ res.json(news);
+  ]
+});
+module.exports = router;
+```
+- In app.js require the news Route
+```js
+var news = require('./routes/news');
+app.use('/news', news);
+```
+## Client Side Requests localhost:3000/news to get those JSON data(client/NewsPanel)
+- NewsPanel.js -> loadMoreNews() with backEnd
+* Cache: False -> if true, it might show the old news from cache
+* news_url -> window.location.hostname
+* 'http://' + window.location.hostname + ':3000' + '/news'
+* method: GET
+```js
+const news_url = 'http://' + window.location.hostname + ':3000' + '/news';
+const request = new Request(news_url, {method:'GET', cache:false});
+```
+- Fetch + .then : Http Request & Promise
+* res.json -> Ansynchrons : so we need another ".then" 調用JSON
+* After we got JSON, deal with the news data
+* If there is no news on web, directly give the new one, but if not, "concat" to the old ones
+```js
+fetch(request)
+    .then(res => res.json())
+    .then(news => {
+      this.setState({
+          news: this.state.news ? this.state.news.concat(news) : news,
+      });
+  });
+```
+## Open Both Client and Server side localhost for developing!
+### Access-Control-Allow-Origin
+- Since we couldn't cross localhost:3000 and localhost:3001 ! Run in the different PORT.
+- Temporarily access to run in different PORT
+* (BUT NEED TO BE REMOVED WHEN FINAL PUBLISH)
+* app.js
+```js
+app.all('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+```
+```
+Failed to load http://localhost:3000/news: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3001' is therefore not allowed access.
+```
+## Scrolling
+- Keep using loadMoreNews by combining Scroll EventListener
+```
+-             |          |  -
+document.     |          |  |
+body.         |          | ScrollY
+offestHeight  |          |  |
+|             |__________|  _
+|             |          |  -
+|             |          | window.innerHeight
+-             |__________|  _
+``` 
 
+- window.innerHeight + scrollY >= document.body.offsetHeight - 50 means when touch the boundry of bottom -> load more News
+- Couldn't use "this.loadMoreNews()" until you change handleScroll to arrow function
+```js
+ window.addEventListener('scroll', () => this.handleScroll);
+```
+- handleScroll()
+```js
+  handleScroll() {
+    const scrollY = window.scrollY 
+      || window.pageYOffset
+      || document.documentElement.scrollYTop;
+    if((window.innerHeight) + scrollY) >= (document.body.offsetHeight - 50);
+  }
+```
+- DONT FORGET THE () -> THIS.HANDLESCROLL()
+```js
+  componentDidMount() {
+    this.loadMoreNews();
+    window.addEventListener('scroll', () => this.handleScroll());
+  }
+```
 
-
+## Debounce 
+[Lodash](https://lodash.com/)
+- Install Lodash inclient
+```
+npm install lodash --save
+```
+- Solve the Scroll frequent problems (Scroll Events happened too much)
+* Send several requests to backend too frequently
+```js
+import _ from 'lodash';
+  componentDidMount() {
+    this.loadMoreNews();
+    this.loadMoreNews = _.debounce(this.loadMoreNews, 1000);
+    window.addEventListener('scroll', () => this.handleScroll());
+  }
+```
 
 
 
