@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SignUpForm from './SignUpForm';
+import SignUpForm from './SignupForm';
 
 class SignUpPage extends React.Component {
   constructor(props, context) {
@@ -32,20 +32,18 @@ class SignUpPage extends React.Component {
     }
 
     // Post signup data.
-    const url = 'http://' + window.location.hostname + ':3000' + '/auth/signup';
-    const request = new Request(
-      url,
-      {method:'POST', headers: {
+    fetch('http://localhost:3000/auth/signup', {
+      method: 'POST',
+      cache: false,
+      headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email: this.state.user.email,
-        password: this.state.user.password
+        email: email,
+        password: password
       })
-    });
-
-    fetch(request).then(response => {
+    }).then(response => {
       if (response.status === 200) {
         this.setState({
           errors: {}
@@ -54,17 +52,16 @@ class SignUpPage extends React.Component {
         // change the current URL to /login
         this.context.router.replace('/login');
       } else {
-        response.json().then(json => {
+        response.json().then(function(json) {
           console.log(json);
           const errors = json.errors ? json.errors : {};
           errors.summary = json.message;
-          console.log(this.state.errors);
           this.setState({errors});
-        });
+        }.bind(this));
       }
     });
   }
-
+  
   changeUser(event) {
     const field = event.target.name;
     const user = this.state.user;
