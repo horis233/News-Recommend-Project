@@ -1,3 +1,6 @@
 jsonrpclib-pelix
 pymongo
 pika
+requests
+redis
+lxml
