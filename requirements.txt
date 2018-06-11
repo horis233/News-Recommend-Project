@@ -4,3 +4,7 @@ pika
 requests
 redis
 lxml
+newspaper3k
+sklearn
+scipy
+python-dateutil
