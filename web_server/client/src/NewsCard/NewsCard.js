@@ -6,10 +6,23 @@ class NewsCard extends React.Component {
 
   redirectToUrl(url, event) {
     //event.preventDefault();
-    //this.sendClickLog();
+    this.sendClickLog();
     window.open(url, '_blank');
   }
 
+  sendClickLog() {
+    const url = 'http://' + window.location.hostname + ':3000' + '/news/userId/' + Auth.getEmail() + '/newsId/' + this.props.news.digest;
+    console.log(this.props.news.digest)
+    let request = new Request(encodeURI(url), {
+      method: 'POST',
+      headers: {
+        'Authorization': 'bearer ' + Auth.getToken(),
+      },
+      cache: false});
+
+    fetch(request);
+  }
+  
   render() {
     return(
       <div className="news-container" onClick={(event) => this.redirectToUrl(this.props.news.url, event)}>

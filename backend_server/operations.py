@@ -9,10 +9,10 @@ from bson.json_util import dumps
 from datetime import datetime
 
 # import common package in parent directory
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
+sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
 
 import mongodb_client
-import news_recommendation_service_client
+#import news_recommendation_service_client
 from cloudAMQP_client import CloudAMQPClient
 
 REDIS_HOST = "localhost"
@@ -25,10 +25,15 @@ NEWS_LIMIT = 100
 NEWS_LIST_BATCH_SIZE = 10
 USER_NEWS_TIME_OUT_IN_SECONDS = 60
 
-LOG_CLICKS_TASK_QUEUE_URL = "amqp://ckfbjqkn:1cpBY4LuQ-awS4kiW0a_wXbiEN8jpu9b@termite.rmq.cloudamqp.com/ckfbjqkn"
-LOG_CLICKS_TASK_QUEUE_NAME = "tap-news-log-clicks-task-queue"
+LOG_CLICKS_TASK_QUEUE_URL = "amqp://cvfaicnw:el5qscg30jx-T3Zs1Hp7xFpHaqEVnnuw@clam.rmq.cloudamqp.com/cvfaicnw"
+LOG_CLICKS_TASK_QUEUE_NAME = "LOG_CLICKS_TASK_QUEUE"
 redis_client = redis.StrictRedis(REDIS_HOST, REDIS_PORT, db=0)
 cloudAMQP_client = CloudAMQPClient(LOG_CLICKS_TASK_QUEUE_URL, LOG_CLICKS_TASK_QUEUE_NAME)
+
+def getOneNews():
+    db = mongodb_client.get_db()
+    news = db[NEWS_TABLE_NAME].find_one()
+    return json.loads(dumps(news))
 
 def getNewsSummariesForUser(user_id, page_num):
     page_num = int(page_num)
@@ -76,6 +81,11 @@ def getNewsSummariesForUser(user_id, page_num):
 
 
 def logNewsClickForUser(user_id, news_id):
+    message = {'userId': user_id, 'newsId': news_id, 'timestamp': datetime.utcnow()}
+
+    db = mongodb_client.get_db()
+    db[CLICK_LOGS_TABLE_NAME].insert(message)
     # Send log task to machine learning service for prediction
     message = {'userId': user_id, 'newsId': news_id, 'timestamp': str(datetime.utcnow())}
+
     cloudAMQP_client.sendMessage(message);
