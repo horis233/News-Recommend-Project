@@ -25,7 +25,7 @@ NEWS_LIMIT = 100
 NEWS_LIST_BATCH_SIZE = 10
 USER_NEWS_TIME_OUT_IN_SECONDS = 60
 
-LOG_CLICKS_TASK_QUEUE_URL = "amqp://cvfaicnw:el5qscg30jx-T3Zs1Hp7xFpHaqEVnnuw@clam.rmq.cloudamqp.com/cvfaicnw"
+LOG_CLICKS_TASK_QUEUE_URL = "amqp://evvloemh:VyrLUwE7s7DfZat3-y2tTwuQEcejR2VO@emu.rmq.cloudamqp.com/evvloemh"
 LOG_CLICKS_TASK_QUEUE_NAME = "LOG_CLICKS_TASK_QUEUE"
 redis_client = redis.StrictRedis(REDIS_HOST, REDIS_PORT, db=0)
 cloudAMQP_client = CloudAMQPClient(LOG_CLICKS_TASK_QUEUE_URL, LOG_CLICKS_TASK_QUEUE_NAME)

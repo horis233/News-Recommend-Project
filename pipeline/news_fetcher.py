@@ -9,9 +9,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../backend_server/', 'u
 
 from cloudAMQP_client import CloudAMQPClient
 
-DEDUPE_NEWS_TASK_QUEUE_URL = "amqp://mycayzfr:E4nnofIrEfvgW4oByDmkoBjvsmobCzFG@termite.rmq.cloudamqp.com/mycayzfr"
+DEDUPE_NEWS_TASK_QUEUE_URL = "amqp://thclcviw:nK7rq3q6zh3_BhTLtt0BA-6Y1cIapo6m@emu.rmq.cloudamqp.com/thclcviw"
 DEDUPE_NEWS_TASK_QUEUE_NAME = "top-new-DEDUPE_NEWS_TASK_QUEUE_NAME"
-SCRAPE_NEWS_TASK_QUEUE_URL = "amqp://oibmmghn:sKrkMTtm55KnbDfURC0ouVbuF06pQigw@termite.rmq.cloudamqp.com/oibmmghn"
+SCRAPE_NEWS_TASK_QUEUE_URL = "amqp://qfgxyvvk:iY2b-CHr35Zc4PYgQZJkbBsgzmTMWf3Y@emu.rmq.cloudamqp.com/qfgxyvvk"
 SCRAPE_NEWS_TASK_QUEUE_NAME = "top-news-SCRAPE_NEWS_TASK_QUEUE"
 
 SLEEP_TIME_IN_SECONDS = 5

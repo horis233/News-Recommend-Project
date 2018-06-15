@@ -17,21 +17,16 @@ NEWS_TIME_OUT_IN_SECONDS = 3600 * 24 * 3
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 
-SCRAPE_NEWS_TASK_QUEUE_URL = "amqp://oibmmghn:sKrkMTtm55KnbDfURC0ouVbuF06pQigw@termite.rmq.cloudamqp.com/oibmmghn"
+SCRAPE_NEWS_TASK_QUEUE_URL = "amqp://qfgxyvvk:iY2b-CHr35Zc4PYgQZJkbBsgzmTMWf3Y@emu.rmq.cloudamqp.com/qfgxyvvk"
 SCRAPE_NEWS_TASK_QUEUE_NAME = "top-news-SCRAPE_NEWS_TASK_QUEUE"
 
 NEWS_SOURCES = [
     'bbc-news',
     'bbc-sport',
-    'bloomberg',
-    'cnn',
-    'entertainment-weekly',
+    'fox-sports',
+    'talkssport',
     'espn',
-    'ign',
-    'techcrunch',
-    'the-new-york-times',
-    'the-wall-street-journal',
-    'the-washington-post'
+    'google-news-ca',
 ]
 
 redis_client = redis.StrictRedis(REDIS_HOST, REDIS_PORT)
