@@ -8,3 +8,6 @@ newspaper3k
 sklearn
 scipy
 python-dateutil
+pandas
+tensorflow
+watchdog
