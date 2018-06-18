@@ -28,7 +28,7 @@ NUM_OF_CLASSES = 17
 INITIAL_P = 1.0 / NUM_OF_CLASSES
 ALPHA = 0.1
 
-SLEEP_TIME_IN_SECONDS = 1
+SLEEP_TIME_IN_SECONDS = 3
 
 LOG_CLICKS_TASK_QUEUE_URL = "amqp://evvloemh:VyrLUwE7s7DfZat3-y2tTwuQEcejR2VO@emu.rmq.cloudamqp.com/evvloemh"
 LOG_CLICKS_TASK_QUEUE_NAME = "tap-news-log-clicks-task-queue"

@@ -17,7 +17,7 @@ DATA_SET_FILE = '../data/labeled_news.csv'
 VARS_FILE = '../model/vars'
 VOCAB_PROCESSOR_SAVE_FILE = '../model/vocab_procesor_save_file'
 MAX_DOCUMENT_LENGTH = 100
-N_CLASSES = 8
+N_CLASSES = 17
 
 # Training parms
 STEPS = 200

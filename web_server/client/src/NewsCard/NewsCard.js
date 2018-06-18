@@ -1,3 +1,4 @@
+import Auth from '../Auth/Auth';
 import React from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 import './NewsCard.css';
@@ -11,7 +12,7 @@ class NewsCard extends React.Component {
   }
 
   sendClickLog() {
-    const url = 'http://' + window.location.hostname + ':3000' + '/news/userId/' + Auth.getEmail() + '/newsId/' + this.props.news.digest;
+    const url = 'http://' + window.location.hostname + ':3000/news/userId/' + Auth.getEmail() + '/newsId/' + this.props.news.digest;
     console.log(this.props.news.digest)
     let request = new Request(encodeURI(url), {
       method: 'POST',
@@ -22,7 +23,7 @@ class NewsCard extends React.Component {
 
     fetch(request);
   }
-  
+
   render() {
     return(
       <div className="news-container" onClick={(event) => this.redirectToUrl(this.props.news.url, event)}>

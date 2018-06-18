@@ -2,7 +2,7 @@ import os
 import sys
 
 # import common package in parent directory
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../backend_server', 'utils'))
 
 import mongodb_client
 import news_topic_modeling_service_client
@@ -14,7 +14,7 @@ if __name__ == '__main__':
     for news in cursor:
         count += 1
         print(count)
-        
+
         if 'class' not in news:
             print('Populating classes...')
             description = news['description']

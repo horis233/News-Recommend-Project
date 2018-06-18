@@ -24,7 +24,7 @@ SERVER_PORT = 6060
 MODEL_DIR = '../model'
 MODEL_UPDATE_LAG_IN_SECONDS = 10
 
-N_CLASSES = 8
+N_CLASSES = 17
 
 VARS_FILE = '../model/vars'
 VOCAB_PROCESSOR_SAVE_FILE = '../model/vocab_procesor_save_file'
