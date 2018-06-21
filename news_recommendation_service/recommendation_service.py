@@ -5,7 +5,7 @@ import sys
 from jsonrpclib.SimpleJSONRPCServer import SimpleJSONRPCServer
 
 # import common package in parent directory
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../backend_server', 'utils'))
 
 import mongodb_client
 

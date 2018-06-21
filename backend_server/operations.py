@@ -12,7 +12,7 @@ from datetime import datetime
 sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
 
 import mongodb_client
-#import news_recommendation_service_client
+import news_recommendation_service_client
 from cloudAMQP_client import CloudAMQPClient
 
 REDIS_HOST = "localhost"
@@ -73,12 +73,11 @@ def getNewsSummariesForUser(user_id, page_num):
     for news in sliced_news:
         # Remove text field to save bandwidth.
         del news['text']
-        if news['class'] == topPreference:
-            news['reason'] = 'Recommend'
+        # if news['class'] == topPreference:
+        #     news['reason'] = 'Recommend'
         if news['publishedAt'].date() == datetime.today().date():
             news['time'] = 'today'
     return json.loads(dumps(sliced_news))
-
 
 def logNewsClickForUser(user_id, news_id):
     message = {'userId': user_id, 'newsId': news_id, 'timestamp': datetime.utcnow()}

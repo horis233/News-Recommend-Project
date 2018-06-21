@@ -22,6 +22,7 @@ class SignUpPage extends React.Component {
     const email = this.state.user.email;
     const password = this.state.user.password;
     const confirm_password = this.state.user.confirm_password;
+    //const errors = this.state.errors;
 
     console.log('email:', email);
     console.log('password:', password);
@@ -32,36 +33,73 @@ class SignUpPage extends React.Component {
     }
 
     // Post signup data.
-    fetch('http://localhost:3000/auth/signup', {
-      method: 'POST',
-      cache: false,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password
-      })
-    }).then(response => {
-      if (response.status === 200) {
+    const url = 'http://' + window.location.hostname + ':3000/auth/signup';
+    const request = new Request(url,
+      {
+        method: 'POST',
+        headers: { // otherwise the server would not understand
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: this.state.user.email,
+          password: this.state.user.password
+        }) // should serialize it
+    }
+  );
+
+    fetch(request)
+    .then(res => {
+      if (res.status === 200) {
         this.setState({
           errors: {}
         });
 
         // change the current URL to /login
         this.context.router.replace('/login');
+
       } else {
-        response.json().then(function(json) {
+        res.json().then(function(json) {
           console.log(json);
           const errors = json.errors ? json.errors : {};
           errors.summary = json.message;
+          console.log(this.state.errors);
           this.setState({errors});
         }.bind(this));
       }
-    });
+      })
+
+    // fetch('http://localhost:3000/auth/signup', {
+    //   method: 'POST',
+    //   cache: false,
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     email: email,
+    //     password: password
+    //   })
+    // }).then(response => {
+    //   if (response.status === 200) {
+    //     this.setState({
+    //       errors: {}
+    //     });
+    //
+    //     // change the current URL to /login
+    //     this.context.router.replace('/login');
+    //   } else {
+    //     response.json().then(function(json) {
+    //       console.log(json);
+    //       const errors = json.errors ? json.errors : {};
+    //       errors.summary = json.message;
+    //       this.setState({errors});
+    //     }.bind(this));
+    //   }
+    // });
+
   }
-  
+
   changeUser(event) {
     const field = event.target.name;
     const user = this.state.user;

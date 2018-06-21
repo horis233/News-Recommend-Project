@@ -11,7 +11,7 @@ import mongodb_client
 from cloudAMQP_client import CloudAMQPClient
 
 # TODO: use your own queue.
-LOG_CLICKS_TASK_QUEUE_URL = "amqp://cvfaicnw:el5qscg30jx-T3Zs1Hp7xFpHaqEVnnuw@clam.rmq.cloudamqp.com/cvfaicnw"
+LOG_CLICKS_TASK_QUEUE_URL = "amqp://evvloemh:VyrLUwE7s7DfZat3-y2tTwuQEcejR2VO@emu.rmq.cloudamqp.com/evvloemh"
 LOG_CLICKS_TASK_QUEUE_NAME = "LOG_CLICKS_TASK_QUEUE"
 
 CLICK_LOGS_TABLE_NAME = 'click_logs'
@@ -50,12 +50,10 @@ def test_logNewsClickForUser_basic():
 
     print ('test_logNewsClicksForUser_basic passed!')
 
-
 def test_getNewsSummariesForUser_basic():
     news = operations.getNewsSummariesForUser('test', 1)
     assert len(news) > 0
     print('test_getNewsSummariesForUser_basic passed')
-
 
 def test_getNewsSummariesForUser_pagination():
     news_page_1 = operations.getNewsSummariesForUser('test', 1)

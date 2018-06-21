@@ -5,6 +5,7 @@ const validator = require('validator');
 
 router.post('/signup', (req, res, next) => {
   const validationResult = validateSignupForm(req.body);
+  console.log(req.body);
   if (!validationResult.success) {
     console.log('validationResult failed');
     return res.status(400).json({

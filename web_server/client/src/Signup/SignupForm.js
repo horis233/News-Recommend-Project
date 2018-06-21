@@ -11,7 +11,7 @@ const SignUpForm = ({
 }) => (
   <div className="container">
     <div className="card-panel signup-panel">
-      <form className="col s12" action="/" onSubmit={onSubmit}>
+      <form className="col s12">
         <h4 className="center-align">Sign Up</h4>
         {errors.summary && <div className="row"><p className="error-message">{errors.summary}</p></div>}
         <div className="row">
@@ -34,8 +34,13 @@ const SignUpForm = ({
             <label htmlFor="confirm_password">Conform Password</label>
           </div>
         </div>
-        <div className="row right-align">
-          <input type="submit" className="waves-effect waves-light btn indigo lighten-1" value='Sign Up'/>
+        { errors.auth && <div className="warning row"> Server: {errors.auth} </div> }
+        { errors.network && <div className="warning row"> {errors.network} </div> }
+        <div className="row">
+          {/* TODO: disable button if form is invalid */}
+          <a className="waves-effect btn float-right" onClick={onSubmit}>
+            Sign Up
+          </a>
         </div>
         <div className="row">
           <p className="right-align"> Already have an account? <Link to="/login">Login</Link></p>

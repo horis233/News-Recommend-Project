@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var rpc_client = require('../rpc_client/rpc_client');
+  
 
 
 /* GET News List. */

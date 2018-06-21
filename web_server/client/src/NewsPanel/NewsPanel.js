@@ -2,6 +2,8 @@ import React from 'react';
 import './NewsPanel.css';
 import NewsCard from '../NewsCard/NewsCard';
 import _ from 'lodash';
+import Auth from '../Auth/Auth';
+
 
 
 class NewsPanel extends React.Component {
@@ -26,8 +28,17 @@ class NewsPanel extends React.Component {
   }
 
   loadMoreNews() {
-    const news_url = 'http://localhost:3000/news';
-    const request = new Request(news_url, {method:'GET', cache:false});
+    if (this.state.loadedAll === true) {
+      return;
+    }
+    const url = 'http://' + window.location.hostname + ':3000' + '/news';
+    let request = new Request(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'bearer ' + Auth.getToken(),
+      }
+    });
+
 
     fetch(request)
       .then(res => res.json())

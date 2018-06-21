@@ -35,5 +35,3 @@ module.exports = {
   getNewsSummariesForUser : getNewsSummariesForUser,
   logNewsClickForUser : logNewsClickForUser
 }
-
-  port: 4040
