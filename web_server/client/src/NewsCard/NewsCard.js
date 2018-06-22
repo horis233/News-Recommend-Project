@@ -1,6 +1,5 @@
 import Auth from '../Auth/Auth';
 import React from 'react';
-import 'materialize-css/dist/css/materialize.min.css';
 import './NewsCard.css';
 
 class NewsCard extends React.Component {
@@ -13,13 +12,13 @@ class NewsCard extends React.Component {
 
   sendClickLog() {
     const url = 'http://' + window.location.hostname + ':3000/news/userId/' + Auth.getEmail() + '/newsId/' + this.props.news.digest;
-    console.log(this.props.news.digest)
+    console.log(url)
     let request = new Request(encodeURI(url), {
       method: 'POST',
       headers: {
         'Authorization': 'bearer ' + Auth.getToken(),
       },
-      cache: false});
+      });
 
     fetch(request);
   }

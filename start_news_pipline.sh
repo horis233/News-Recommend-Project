@@ -4,10 +4,10 @@ service mongod start
 
 pip3 install -r requirements.txt
 
-cd news_topic_modeling_service/server
-python3 server.py &
+# cd news_topic_modeling_service/server
+# python3 server.py &
 
-cd ../../pipeline
+cd pipeline
 python3 news_monitor.py &
 python3 news_fetcher.py &
 python3 news_deduper.py &

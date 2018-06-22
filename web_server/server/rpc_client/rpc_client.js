@@ -13,13 +13,12 @@ function add(a, b, callback) {
     callback(response.result);
   });
 }
-
 function getNewsSummariesForUser(user_id, page_num, callback) {
-    client.request('getNewsSummariesForUser', [user_id, page_num], function(err, error, response) {
-        if (err) throw err;
-        console.log(response);
-        callback(response);
-    });
+  client.request('getNewsSummariesForUser', [user_id, page_num], function(err, response) {
+    if (err) throw err;
+    console.log(response);
+    callback(response.result);
+  });
 }
 
 // Log a news click event for a user

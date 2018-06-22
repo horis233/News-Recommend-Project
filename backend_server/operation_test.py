@@ -72,7 +72,7 @@ def test_getNewsSummariesForUser_pagination():
 
 
 if __name__ == "__main__":
-    #test_getOneNews_basic()
+    test_getOneNews_basic()
     test_logNewsClickForUser_basic()
-    #test_getNewsSummariesForUser_basic()
-    #test_getNewsSummariesForUser_pagination()
+    test_getNewsSummariesForUser_basic()
+    test_getNewsSummariesForUser_pagination()

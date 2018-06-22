@@ -5,11 +5,15 @@ import _ from 'lodash';
 import Auth from '../Auth/Auth';
 
 
-
 class NewsPanel extends React.Component {
   constructor() {
     super();
-    this.state = { news: null, pageNum:1, totalPages:1, loadedAll:false };
+    this.state = {
+      news: null,
+      page_Num:0,
+      loadedAll:false
+    };
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   handleScroll() {
@@ -31,32 +35,53 @@ class NewsPanel extends React.Component {
     if (this.state.loadedAll === true) {
       return;
     }
-    const url = 'http://' + window.location.hostname + ':3000' + '/news';
-    let request = new Request(url, {
+
+    let url = 'http://' + window.location.hostname + ':3000' +
+        '/news/userId/' + Auth.getEmail() + '/pageNum/' + this.state.page_Num;
+
+    let request = new Request(encodeURI(url), {
       method: 'GET',
       headers: {
         'Authorization': 'bearer ' + Auth.getToken(),
-      }
-    });
-
+      },
+      });
 
     fetch(request)
-      .then(res => res.json())
-      .then(news => {
-        if (!news ||  news.length === 0) {
+      .then(
+        res => {
+                if (res.status === 200) {
+                    return res.json();
+                }
+
+                // TODO: not authenticated; redirect to login page?
+                if (res.status === 401) {
+                    Auth.deAuthenticate();
+                    this.context.router.history.replace('/login');
+                    throw Error('user not authenticated')
+                }
+                if (res.status === 500) {
+                    // TODO: server might send back some error info, but not take it here
+                    throw Error('Fetching news: server error!');
+                }
+                throw Error('Fetching news: other error!')
+            }
+      )
+      .then((news_list) => {
+        if (!news_list ||  news_list.length === 0) {
           this.setState({loadedAll: true});
+        }else {
+          this.setState({
+            news: this.state.news == null ?  news_list: this.state.news.concat(news_list),
+            page_Num: this.state.page_Num + 1
+          });
         }
-        this.setState({
-          news: this.state.news ? this.state.news.concat(news) : news,
-          pageNum: this.state.pageNum + 1
-        });
       });
   }
 
   renderNews() {
     const news_list = this.state.news.map(news => {
       return (
-        <a className = 'list-group-item' key = {news.digest} >
+        <a className = 'list-group-item'  >
           <NewsCard news = {news} />
         </a>
       );
