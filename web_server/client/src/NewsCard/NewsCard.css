@@ -1,8 +1,23 @@
-.pull-right {
+/* .pull-right {
   text-align: right;
   float: right;
   margin: auto;
+} */
+.news-intro-panel {
+  margin: auto 5px;
+  text-align: left;
 }
+
+.news-description {
+  text-align: left;
+}
+.news-description p {
+  font-size: 18px;
+}
+.news-intro-col {
+    display: inline-flex;
+    color: black;
+  }
 
   .fill {
     display: flex;

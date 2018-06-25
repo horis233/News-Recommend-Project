@@ -31,7 +31,7 @@ ALPHA = 0.1
 SLEEP_TIME_IN_SECONDS = 3
 
 LOG_CLICKS_TASK_QUEUE_URL = "amqp://evvloemh:VyrLUwE7s7DfZat3-y2tTwuQEcejR2VO@emu.rmq.cloudamqp.com/evvloemh"
-LOG_CLICKS_TASK_QUEUE_NAME = "tap-news-log-clicks-task-queue"
+LOG_CLICKS_TASK_QUEUE_NAME = "LOG_CLICKS_TASK_QUEUE"
 
 PREFERENCE_MODEL_TABLE_NAME = "user_preference_model"
 NEWS_TABLE_NAME = "news"

@@ -1,4 +1,3 @@
-"""News trainer"""
 import news_cnn_model
 import numpy as np
 import os
@@ -14,19 +13,19 @@ learn = tf.contrib.learn
 REMOVE_PREVIOUS_MODEL = True
 
 MODEL_OUTPUT_DIR = '../model/'
-DATA_SET_FILE = '../data/train.csv'
+DATA_SET_FILE = '../data/labeled_news.csv'
 VARS_FILE = '../model/vars'
-VOCAB_PROCESSOR_SAVE_FILE = '../model/vocab_processor_save_file'
+VOCAB_PROCESSOR_SAVE_FILE = '../model/vocab_procesor_save_file'
 MAX_DOCUMENT_LENGTH = 100
-N_CLASSES = 4
+N_CLASSES = 8
 
+# Training parms
 STEPS = 200
 
-
 def main(unused_argv):
-    """Main function"""
     if REMOVE_PREVIOUS_MODEL:
         # Remove old model
+        print("Removing previous model...")
         shutil.rmtree(MODEL_OUTPUT_DIR)
         os.mkdir(MODEL_OUTPUT_DIR)
 
@@ -50,7 +49,7 @@ def main(unused_argv):
     print('Total words: %d' % n_words)
 
     # Saving n_words and vocab_processor:
-    with open(VARS_FILE, 'wb') as f:
+    with open(VARS_FILE, 'wb') as f:  # needs to be opened in binary mode.
         pickle.dump(n_words, f)
 
     vocab_processor.save(VOCAB_PROCESSOR_SAVE_FILE)
@@ -70,7 +69,6 @@ def main(unused_argv):
 
     score = metrics.accuracy_score(y_test, y_predicted)
     print('Accuracy: {0:f}'.format(score))
-
 
 if __name__ == '__main__':
     tf.app.run(main=main)

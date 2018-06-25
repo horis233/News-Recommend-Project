@@ -24,8 +24,8 @@ NEWS_SOURCES = [
     'bbc-news',
     'bbc-sport',
     'fox-sports',
-    'talkssport',
     'espn',
+    'the-sport-bible',
     'google-news-ca',
 ]
 

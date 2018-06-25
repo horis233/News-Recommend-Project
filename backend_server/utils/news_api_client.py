@@ -20,15 +20,15 @@ def getNewsFromSources(sources=DEFAULT_SOURCE):
                     'sources': source
                     # 'sortBy': sortBy
                     }
-        reponse = requests.get(_buildUrl(), params=payload)
-        print(reponse)
+        # reponse = requests.get(_buildUrl(), params=payload)
+        # print(reponse)
         res_json = requests.get(_buildUrl(), params=payload).json()
         print(res_json)
         if (res_json is not None and
             res_json['status'] == 'ok'):
 
-            # for news in res_json['articles']:
-            #      news['source'] = res_json['source']
+            for news in res_json['articles']:
+               news['source'] = news['source']['name']
 
             articles.extend(res_json['articles'])
 
