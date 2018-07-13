@@ -81,18 +81,14 @@ class NewsPanel extends React.Component {
   renderNews() {
     const news_list = this.state.news.map(news => {
       return (
-        <a className = 'list-group-item'  >
           <NewsCard news = {news} />
-        </a>
       );
     });
 
     return (
-      <div className = 'container-fluid'>
-        <div className = "list-group">
+        <div className = "row">
           {news_list}
         </div>
-      </div>
     );
   }
 
@@ -101,12 +97,25 @@ class NewsPanel extends React.Component {
       return(
         <div>
           {this.renderNews()}
+          { this.state.loading===true &&
+              <div className="row">
+              <div className="progress col s12 m6 l4 offset-m3 offset-l4">
+                <div className="indeterminate"></div>
+              </div>
+              </div>
+          }
         </div>
       );
     } else {
       return(
         <div>
-          Loading...
+          <div className="row">
+          <div className="bar-div">
+          <div className="progress col s12 m6 l4 offset-m3 offset-l4">
+            <div className="indeterminate"></div>
+          </div>
+          </div>
+          </div>
         </div>
       );
     }

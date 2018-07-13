@@ -1,3 +1,79 @@
-.nav-wrapper {
-  background-color: transparent;
+.nav {
+    height: 40px;
+    line-height: 40px;
+    color: black;
+}
+
+.nav i, .nav [class^="mdi-"], .nav [class*="mdi-"], .nav i.material-icons {
+    height: 40px;
+    line-height: 40px;
+}
+
+.nav .button-collapse i {
+    height: 40px;
+    line-height: 40px;
+    color: black;
+}
+
+.nav .brand-logo {
+    font-size: 1.6rem;
+}
+
+.nav ul a {
+    color: black !important;
+}
+
+.nav .brand-logo {
+    color: black !important;
+}
+
+.nav-logo {
+    height:30px;
+    margin-top: 8px;
+    margin-left:10px;
+}
+
+@media only screen and (min-width: 601px){
+    .nav, .nav .nav-wrapper i, .nav a.button-collapse, .nav a.button-collapse i {
+        height: 40px;
+        line-height: 40px;
+    }
+}
+
+.searchBar {
+	display: inline-block;
+	width:200px;
+	margin-right:30px;
+}
+
+.modal {
+	width: 75% !important ; max-height: 100% !important ;
+}
+
+.info {
+    position: fixed;
+    bottom: 0px;
+    right:0px;
+    color: white;
+    font-size: 10px;
+    background-color: rgba(0,0,0,0.6);
+    padding-right: 5px;
+    padding-left: 5px;
+    z-index: 1000;
+    border-radius: 2px;
+}
+
+.nav {
+  background-color: #f2f2f2 !important;
+}
+
+.logo-pic {
+  display: block;
+  margin: auto;
+  padding: 10px;
+  width: 40%;
+}
+
+.logo-title {
+    padding-left: 5px;
 }

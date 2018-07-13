@@ -1,5 +1,6 @@
 import Base from './Base/Base';
 import App from './App/App';
+import SearchPage from './Search/SearchPage';
 import LoginPage from './Login/LoginPage';
 import SignUpPage from './Signup/SignupPage';
 import Auth from './Auth/Auth';
@@ -17,7 +18,16 @@ const routes = {
         }
       }
     },
-
+    {
+      path: '/search',
+      getComponent: (location, callback) => {
+        if (Auth.isUserAuthenticated()) {
+          callback(null, SearchPage);
+        } else {
+          callback(null, LoginPage);
+        }
+      }
+    },
     {
       path: "/login",
       component: LoginPage

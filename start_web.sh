@@ -15,7 +15,7 @@ python3 recommendation_service.py&
 
 cd ../web_server/client
 # npm install
-npm run-script build&
+npm run watch&
 
 cd ../server
 # npm install
