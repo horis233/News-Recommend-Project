@@ -2,7 +2,7 @@ import React from 'react';
 import Auth from '../Auth/Auth';
 import LoginForm from './LoginForm';
 import PropTypes from 'prop-types';
-
+import './LoginPage.css'
 
 class LoginPage extends React.Component {
   constructor(props, context) {
@@ -15,7 +15,17 @@ class LoginPage extends React.Component {
         password: ''
       }
     };
+    this.processForm = this.processForm.bind(this);
+    this.changeUser = this.changeUser.bind(this);
   }
+
+  componentWillMount() {
+        document.body.style.backgroundColor = 'rgba(0,0,0,0.5)';
+	}
+
+	componentWillUnmount() {
+        document.body.style.backgroundColor = null;
+	}
 
   processForm(event) {
     event.preventDefault();
@@ -24,10 +34,10 @@ class LoginPage extends React.Component {
     const password = this.state.user.password;
 
     console.log('email:', email);
-    console.log('password:', password);
+    //console.log('password:', password);
 
     // TODO: post login data.
-    const url = 'http://' + window.location.hostname + ':3000/auth/login';
+    const url = '/auth/login';
     const request = new Request(
       url,
       {
@@ -58,7 +68,8 @@ class LoginPage extends React.Component {
         console.log('Login failed.');
         response.json().then(json => {
           const errors = json.errors? json.errors : {};
-          errors.summmary = json.message;
+          //console.log(errors);
+          errors.summary = json.message;
           this.setState({errors});
         });
       }
@@ -79,7 +90,6 @@ class LoginPage extends React.Component {
        onSubmit={(e) => this.processForm(e)}
        onChange={(e) => this.changeUser(e)}
        errors={this.state.errors}
-       user={this.state.user}
        />
     );
   }

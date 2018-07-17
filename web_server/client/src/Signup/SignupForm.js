@@ -7,11 +7,14 @@ const SignUpForm = ({
   onSubmit,
   onChange,
   errors,
-  user,
 }) => (
   <div className="container">
-    <div className="card-panel signup-panel">
-      <form className="col s12">
+    <div className="row">
+    <br />
+    <br />
+    <div className="card-panel signup-panel col s10 m6 l4 offset-s1 offset-m3 offset-l4">
+      <br />
+      <form className="col s12" action="/" onSubmit={onSubmit}>
         <h4 className="center-align">Sign Up</h4>
         {errors.summary && <div className="row"><p className="error-message">{errors.summary}</p></div>}
         <div className="row">
@@ -34,18 +37,14 @@ const SignUpForm = ({
             <label htmlFor="confirm_password">Conform Password</label>
           </div>
         </div>
-        { errors.auth && <div className="warning row"> Server: {errors.auth} </div> }
-        { errors.network && <div className="warning row"> {errors.network} </div> }
-        <div className="row">
-          {/* TODO: disable button if form is invalid */}
-          <a className="waves-effect btn float-right" onClick={onSubmit}>
-            Sign Up
-          </a>
+        <div className="row right-align">
+          <input type="submit" className="waves-effect waves-light btn indigo lighten-1" value='Sign Up'/>
         </div>
         <div className="row">
           <p className="right-align"> Already have an account? <Link to="/login">Login</Link></p>
         </div>
       </form>
+    </div>
     </div>
   </div>
 );
@@ -53,8 +52,7 @@ const SignUpForm = ({
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired
 };
 
 export default SignUpForm;

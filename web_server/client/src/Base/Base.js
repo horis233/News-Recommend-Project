@@ -61,7 +61,7 @@ class Base extends React.Component {
         </div>
     </nav>
       <div className="info">
-        Project built by Yenhsuan Chen(Terry)
+        Project built by Horis(Jiaming) Hu
       </div>
       <br/>
           {
