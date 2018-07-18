@@ -21,41 +21,15 @@ router.post('/userId/:userId/newsId/:newsId', function(req, res, next) {
   rpc_client.logNewsClickForUser(user_id, news_id);
   res.status(200);
 });
-/* GET News List. */
-/* GET news list. */
-// router.get('/userId/:userId/pageNum/:pageNum', check_auth, function(req, res) {
-// 	// mind that all params are intepreted as strings
-// 	// TODO: error handling for invalid parameters
-//     rpc_client.getNewsSummariesForUser(req.params['userId'], req.params['pageNum'],
-//         function(news_list) {
-//             res.json(news_list);
-//         },
-//         function(err) {
-//             res.status(500).json({
-//                 success: false,
-//                 error: "Web Server failed to fetch news"
-//             });
-//         }
-//     );
-// })
 
-// router.get('/click-log/userId/:userId/newsDigest/:newsDigest', check_auth,
-//     function(req, res) {
-//         var userId = req.params.userId, digest = req.params.newsDigest;
-//         logger.debug('click happened');
-//         rpc_client.logNewsClickForUser(userId, digest,
-//             function(result) {
-//                 logger.debug(`user '${userId}' clicked news '${digest}' on the front'`);
-//                 res.status(200).end();
-//             },
-//             function(err) {
-//                 res.status(500).json({
-//                     success: false,
-//                     error: "Web Server failed deliver click log"
-//                 });
-//             }
-//         );
-// })
+router.post('/search', function(req,res) {
+  console.log('Searching news...');
+   let keyword = req.body['keyword'];
+   let page_num = req.body['pageNum'];
+   rpc_client.searchNews( keyword, page_num , function(response) {
+   res.json(response);
+  });
+});
 
 
 module.exports = router;

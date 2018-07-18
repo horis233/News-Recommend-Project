@@ -10,7 +10,7 @@ class NewsPanel extends React.Component {
     super();
     this.state = {
       news: null,
-      page_Num:0,
+      pageNum:0,
       loadedAll:false
     };
     this.handleScroll = this.handleScroll.bind(this);
@@ -37,7 +37,7 @@ class NewsPanel extends React.Component {
     }
 
     let url = 'http://' + window.location.hostname + ':3000' +
-        '/news/userId/' + Auth.getEmail() + '/pageNum/' + this.state.page_Num;
+        '/news/userId/' + Auth.getEmail() + '/pageNum/' + this.state.pageNum;
 
     let request = new Request(encodeURI(url), {
       method: 'GET',
@@ -72,7 +72,7 @@ class NewsPanel extends React.Component {
         }else {
           this.setState({
             news: this.state.news == null ?  news_list: this.state.news.concat(news_list),
-            page_Num: this.state.page_Num + 1
+            pageNum: this.state.pageNum + 1
           });
         }
       });

@@ -8,16 +8,16 @@ import _ from 'lodash';
 class SearchPanel extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {news:null, pageNum:1, loadedAll:false, loading:false};
+    this.state = {news:null, pageNum:0, loadedAll:false, loading:false};
     this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentWillReceiveProps() {
-    this.setState({news:null, pageNum:1, loadedAll:false});
+    this.setState({news:null, pageNum:0, loadedAll:false});
     this.loadMoreNews();
   }
 
-  componentDidMount() {   
+  componentDidMount() {
     this.loadMoreNews();
     this.loadMoreNews = _.debounce(this.loadMoreNews, 1000);
     window.addEventListener('scroll', this.handleScroll);
@@ -78,7 +78,7 @@ class SearchPanel extends React.Component {
       );
     });
 
-    return (  
+    return (
         <div className='row'>
             {news_list}
         </div>
