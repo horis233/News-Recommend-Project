@@ -1,46 +1,5 @@
 node {
-  name: "global_step/Initializer/zeros/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@global_step"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "global_step/Initializer/zeros/Const"
+  name: "global_step/Initializer/zeros"
   op: "Const"
   attr {
     key: "_class"
@@ -74,41 +33,6 @@ node {
         }
         int64_val: 0
       }
-    }
-  }
-}
-node {
-  name: "global_step/Initializer/zeros"
-  op: "Fill"
-  input: "global_step/Initializer/zeros/shape_as_tensor"
-  input: "global_step/Initializer/zeros/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_INT64
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@global_step"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "index_type"
-    value {
-      type: DT_INT32
     }
   }
 }
@@ -1172,10 +1096,55 @@ node {
   }
 }
 node {
+  name: "words/embedding_lookup/axis"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@words/embeddings"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+        }
+        int_val: 0
+      }
+    }
+  }
+}
+node {
   name: "words/embedding_lookup"
-  op: "Gather"
+  op: "GatherV2"
   input: "words/embeddings/read"
   input: "input"
+  input: "words/embedding_lookup/axis"
+  attr {
+    key: "Taxis"
+    value {
+      type: DT_INT32
+    }
+  }
   attr {
     key: "Tindices"
     value {
@@ -1212,12 +1181,6 @@ node {
           }
         }
       }
-    }
-  }
-  attr {
-    key: "validate_indices"
-    value {
-      b: true
     }
   }
 }
@@ -1743,98 +1706,8 @@ node {
   }
 }
 node {
-  name: "CNN_layer1/Conv/biases/Initializer/zeros/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@CNN_layer1/Conv/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        int_val: 10
-      }
-    }
-  }
-}
-node {
-  name: "CNN_layer1/Conv/biases/Initializer/zeros/Const"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@CNN_layer1/Conv/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 0.0
-      }
-    }
-  }
-}
-node {
   name: "CNN_layer1/Conv/biases/Initializer/zeros"
-  op: "Fill"
-  input: "CNN_layer1/Conv/biases/Initializer/zeros/shape_as_tensor"
-  input: "CNN_layer1/Conv/biases/Initializer/zeros/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
+  op: "Const"
   attr {
     key: "_class"
     value {
@@ -1856,9 +1729,23 @@ node {
     }
   }
   attr {
-    key: "index_type"
+    key: "dtype"
     value {
-      type: DT_INT32
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 10
+          }
+        }
+        float_val: 0.0
+      }
     }
   }
 }
@@ -2795,98 +2682,8 @@ node {
   }
 }
 node {
-  name: "CNN_layer2/Conv/biases/Initializer/zeros/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@CNN_layer2/Conv/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        int_val: 10
-      }
-    }
-  }
-}
-node {
-  name: "CNN_layer2/Conv/biases/Initializer/zeros/Const"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@CNN_layer2/Conv/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 0.0
-      }
-    }
-  }
-}
-node {
   name: "CNN_layer2/Conv/biases/Initializer/zeros"
-  op: "Fill"
-  input: "CNN_layer2/Conv/biases/Initializer/zeros/shape_as_tensor"
-  input: "CNN_layer2/Conv/biases/Initializer/zeros/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
+  op: "Const"
   attr {
     key: "_class"
     value {
@@ -2908,9 +2705,23 @@ node {
     }
   }
   attr {
-    key: "index_type"
+    key: "dtype"
     value {
-      type: DT_INT32
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 10
+          }
+        }
+        float_val: 0.0
+      }
     }
   }
 }
@@ -3738,98 +3549,8 @@ node {
   }
 }
 node {
-  name: "fully_connected/biases/Initializer/zeros/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@fully_connected/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        int_val: 8
-      }
-    }
-  }
-}
-node {
-  name: "fully_connected/biases/Initializer/zeros/Const"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@fully_connected/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 0.0
-      }
-    }
-  }
-}
-node {
   name: "fully_connected/biases/Initializer/zeros"
-  op: "Fill"
-  input: "fully_connected/biases/Initializer/zeros/shape_as_tensor"
-  input: "fully_connected/biases/Initializer/zeros/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
+  op: "Const"
   attr {
     key: "_class"
     value {
@@ -3851,9 +3572,23 @@ node {
     }
   }
   attr {
-    key: "index_type"
+    key: "dtype"
     value {
-      type: DT_INT32
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 8
+          }
+        }
+        float_val: 0.0
+      }
     }
   }
 }
@@ -6185,40 +5920,7 @@ node {
   }
 }
 node {
-  name: "softmax_cross_entropy_loss/zeros_like/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "softmax_cross_entropy_loss/zeros_like/Const"
+  name: "softmax_cross_entropy_loss/zeros_like"
   op: "Const"
   attr {
     key: "_output_shapes"
@@ -6244,33 +5946,6 @@ node {
         }
         float_val: 0.0
       }
-    }
-  }
-}
-node {
-  name: "softmax_cross_entropy_loss/zeros_like"
-  op: "Fill"
-  input: "softmax_cross_entropy_loss/zeros_like/shape_as_tensor"
-  input: "softmax_cross_entropy_loss/zeros_like/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "index_type"
-    value {
-      type: DT_INT32
     }
   }
 }
@@ -6540,40 +6215,7 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/value_grad/zeros_like/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/value_grad/zeros_like/Const"
+  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/value_grad/zeros_like"
   op: "Const"
   attr {
     key: "_output_shapes"
@@ -6599,33 +6241,6 @@ node {
         }
         float_val: 0.0
       }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/value_grad/zeros_like"
-  op: "Fill"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/value_grad/zeros_like/shape_as_tensor"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/value_grad/zeros_like/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "index_type"
-    value {
-      type: DT_INT32
     }
   }
 }
@@ -7183,7 +6798,7 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_3_grad/Tile/multiples"
+  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_3_grad/Const"
   op: "Const"
   attr {
     key: "_output_shapes"
@@ -7219,7 +6834,7 @@ node {
   name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_3_grad/Tile"
   op: "Tile"
   input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_3_grad/Reshape"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_3_grad/Tile/multiples"
+  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_3_grad/Const"
   attr {
     key: "T"
     value {
@@ -7230,204 +6845,6 @@ node {
     key: "Tmultiples"
     value {
       type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/zeros_like/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/zeros_like/Const"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 0.0
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/zeros_like"
-  op: "Fill"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/zeros_like/shape_as_tensor"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/zeros_like/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "index_type"
-    value {
-      type: DT_INT32
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/Select"
-  op: "Select"
-  input: "softmax_cross_entropy_loss/Equal_1"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_1_grad/tuple/control_dependency_1"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/zeros_like"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/Select_1"
-  op: "Select"
-  input: "softmax_cross_entropy_loss/Equal_1"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/zeros_like"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_1_grad/tuple/control_dependency_1"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/tuple/group_deps"
-  op: "NoOp"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/Select"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/Select_1"
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/tuple/control_dependency"
-  op: "Identity"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/Select"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/tuple/group_deps"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/Select"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/tuple/control_dependency_1"
-  op: "Identity"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/Select_1"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/tuple/group_deps"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/Select_1"
-      }
     }
   }
   attr {
@@ -7501,7 +6918,7 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_1_grad/Tile/multiples"
+  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_1_grad/Const"
   op: "Const"
   attr {
     key: "_output_shapes"
@@ -7537,7 +6954,7 @@ node {
   name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_1_grad/Tile"
   op: "Tile"
   input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_1_grad/Reshape"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_1_grad/Tile/multiples"
+  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_1_grad/Const"
   attr {
     key: "T"
     value {
@@ -7667,131 +7084,6 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_2_grad/Reshape/shape"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        int_val: 1
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_2_grad/Reshape"
-  op: "Reshape"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_1_grad/tuple/control_dependency_1"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_2_grad/Reshape/shape"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_2_grad/Shape"
-  op: "Shape"
-  input: "softmax_cross_entropy_loss/Mul_1"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "out_type"
-    value {
-      type: DT_INT32
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_2_grad/Tile"
-  op: "Tile"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_2_grad/Reshape"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_2_grad/Shape"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tmultiples"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: -1
-          }
-        }
-      }
-    }
-  }
-}
-node {
   name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_grad/Reshape/shape"
   op: "Const"
   attr {
@@ -7911,989 +7203,6 @@ node {
           dim {
             size: -1
           }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Shape"
-  op: "Shape"
-  input: "softmax_cross_entropy_loss/ones"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "out_type"
-    value {
-      type: DT_INT32
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Shape_1"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/BroadcastGradientArgs"
-  op: "BroadcastGradientArgs"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Shape"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Shape_1"
-  attr {
-    key: "T"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: -1
-          }
-        }
-        shape {
-          dim {
-            size: -1
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/mul"
-  op: "Mul"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_2_grad/Tile"
-  input: "softmax_cross_entropy_loss/Select"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: -1
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Sum"
-  op: "Sum"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/mul"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/BroadcastGradientArgs"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tidx"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          unknown_rank: true
-        }
-      }
-    }
-  }
-  attr {
-    key: "keep_dims"
-    value {
-      b: false
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Reshape"
-  op: "Reshape"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Sum"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Shape"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: -1
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/mul_1"
-  op: "Mul"
-  input: "softmax_cross_entropy_loss/ones"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Sum_2_grad/Tile"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: -1
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Sum_1"
-  op: "Sum"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/mul_1"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/BroadcastGradientArgs:1"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tidx"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          unknown_rank: true
-        }
-      }
-    }
-  }
-  attr {
-    key: "keep_dims"
-    value {
-      b: false
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Reshape_1"
-  op: "Reshape"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Sum_1"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Shape_1"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/tuple/group_deps"
-  op: "NoOp"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Reshape"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Reshape_1"
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/tuple/control_dependency"
-  op: "Identity"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Reshape"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/tuple/group_deps"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Reshape"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: -1
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/tuple/control_dependency_1"
-  op: "Identity"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Reshape_1"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/tuple/group_deps"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/Reshape_1"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/ones_grad/Const"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        int_val: 0
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/ones_grad/Sum"
-  op: "Sum"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/tuple/control_dependency"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/ones_grad/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tidx"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "keep_dims"
-    value {
-      b: false
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/zeros_like/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/zeros_like/Const"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 0.0
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/zeros_like"
-  op: "Fill"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/zeros_like/shape_as_tensor"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/zeros_like/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "index_type"
-    value {
-      type: DT_INT32
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/Select"
-  op: "Select"
-  input: "softmax_cross_entropy_loss/Equal"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/tuple/control_dependency_1"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/zeros_like"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/Select_1"
-  op: "Select"
-  input: "softmax_cross_entropy_loss/Equal"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/zeros_like"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Mul_1_grad/tuple/control_dependency_1"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/tuple/group_deps"
-  op: "NoOp"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/Select"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/Select_1"
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/tuple/control_dependency"
-  op: "Identity"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/Select"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/tuple/group_deps"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/Select"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/tuple/control_dependency_1"
-  op: "Identity"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/Select_1"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/tuple/group_deps"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/Select_1"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Shape"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Shape_1"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/BroadcastGradientArgs"
-  op: "BroadcastGradientArgs"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Shape"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Shape_1"
-  attr {
-    key: "T"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: -1
-          }
-        }
-        shape {
-          dim {
-            size: -1
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/RealDiv"
-  op: "RealDiv"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/tuple/control_dependency_1"
-  input: "softmax_cross_entropy_loss/ToFloat_3"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Sum"
-  op: "Sum"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/RealDiv"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/BroadcastGradientArgs"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tidx"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          unknown_rank: true
-        }
-      }
-    }
-  }
-  attr {
-    key: "keep_dims"
-    value {
-      b: false
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Reshape"
-  op: "Reshape"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Sum"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Shape"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Neg"
-  op: "Neg"
-  input: "softmax_cross_entropy_loss/ToFloat_2"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/RealDiv_1"
-  op: "RealDiv"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Neg"
-  input: "softmax_cross_entropy_loss/ToFloat_3"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/RealDiv_2"
-  op: "RealDiv"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/RealDiv_1"
-  input: "softmax_cross_entropy_loss/ToFloat_3"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/mul"
-  op: "Mul"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/Select_grad/tuple/control_dependency_1"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/RealDiv_2"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Sum_1"
-  op: "Sum"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/mul"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/BroadcastGradientArgs:1"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tidx"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          unknown_rank: true
-        }
-      }
-    }
-  }
-  attr {
-    key: "keep_dims"
-    value {
-      b: false
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Reshape_1"
-  op: "Reshape"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Sum_1"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Shape_1"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/tuple/group_deps"
-  op: "NoOp"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Reshape"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Reshape_1"
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/tuple/control_dependency"
-  op: "Identity"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Reshape"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/tuple/group_deps"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Reshape"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/tuple/control_dependency_1"
-  op: "Identity"
-  input: "OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Reshape_1"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/tuple/group_deps"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@OptimizeLoss/gradients/softmax_cross_entropy_loss/div_grad/Reshape_1"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
         }
       }
     }
@@ -9386,8 +7695,8 @@ node {
 node {
   name: "OptimizeLoss/gradients/fully_connected/BiasAdd_grad/tuple/group_deps"
   op: "NoOp"
-  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/xentropy/Reshape_grad/Reshape"
   input: "^OptimizeLoss/gradients/fully_connected/BiasAdd_grad/BiasAddGrad"
+  input: "^OptimizeLoss/gradients/softmax_cross_entropy_loss/xentropy/Reshape_grad/Reshape"
 }
 node {
   name: "OptimizeLoss/gradients/fully_connected/BiasAdd_grad/tuple/control_dependency"
@@ -10270,8 +8579,8 @@ node {
 node {
   name: "OptimizeLoss/gradients/CNN_layer2/Conv/BiasAdd_grad/tuple/group_deps"
   op: "NoOp"
-  input: "^OptimizeLoss/gradients/CNN_layer2/Conv/Relu_grad/ReluGrad"
   input: "^OptimizeLoss/gradients/CNN_layer2/Conv/BiasAdd_grad/BiasAddGrad"
+  input: "^OptimizeLoss/gradients/CNN_layer2/Conv/Relu_grad/ReluGrad"
 }
 node {
   name: "OptimizeLoss/gradients/CNN_layer2/Conv/BiasAdd_grad/tuple/control_dependency"
@@ -10388,42 +8697,6 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/gradients/CNN_layer2/Conv/Conv2D_grad/Const"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 4
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 4
-          }
-        }
-        tensor_content: "\024\000\000\000\n\000\000\000\001\000\000\000\n\000\000\000"
-      }
-    }
-  }
-}
-node {
   name: "OptimizeLoss/gradients/CNN_layer2/Conv/Conv2D_grad/Conv2DBackpropInput"
   op: "Conv2DBackpropInput"
   input: "OptimizeLoss/gradients/CNN_layer2/Conv/Conv2D_grad/ShapeN"
@@ -10501,7 +8774,7 @@ node {
   name: "OptimizeLoss/gradients/CNN_layer2/Conv/Conv2D_grad/Conv2DBackpropFilter"
   op: "Conv2DBackpropFilter"
   input: "CNN_layer1/transpose"
-  input: "OptimizeLoss/gradients/CNN_layer2/Conv/Conv2D_grad/Const"
+  input: "OptimizeLoss/gradients/CNN_layer2/Conv/Conv2D_grad/ShapeN:1"
   input: "OptimizeLoss/gradients/CNN_layer2/Conv/BiasAdd_grad/tuple/control_dependency"
   attr {
     key: "T"
@@ -10515,16 +8788,16 @@ node {
       list {
         shape {
           dim {
-            size: 20
+            size: -1
           }
           dim {
-            size: 10
+            size: -1
           }
           dim {
-            size: 1
+            size: -1
           }
           dim {
-            size: 10
+            size: -1
           }
         }
       }
@@ -10574,8 +8847,8 @@ node {
 node {
   name: "OptimizeLoss/gradients/CNN_layer2/Conv/Conv2D_grad/tuple/group_deps"
   op: "NoOp"
-  input: "^OptimizeLoss/gradients/CNN_layer2/Conv/Conv2D_grad/Conv2DBackpropInput"
   input: "^OptimizeLoss/gradients/CNN_layer2/Conv/Conv2D_grad/Conv2DBackpropFilter"
+  input: "^OptimizeLoss/gradients/CNN_layer2/Conv/Conv2D_grad/Conv2DBackpropInput"
 }
 node {
   name: "OptimizeLoss/gradients/CNN_layer2/Conv/Conv2D_grad/tuple/control_dependency"
@@ -10887,8 +9160,8 @@ node {
 node {
   name: "OptimizeLoss/gradients/CNN_layer1/Conv/BiasAdd_grad/tuple/group_deps"
   op: "NoOp"
-  input: "^OptimizeLoss/gradients/CNN_layer1/Conv/Relu_grad/ReluGrad"
   input: "^OptimizeLoss/gradients/CNN_layer1/Conv/BiasAdd_grad/BiasAddGrad"
+  input: "^OptimizeLoss/gradients/CNN_layer1/Conv/Relu_grad/ReluGrad"
 }
 node {
   name: "OptimizeLoss/gradients/CNN_layer1/Conv/BiasAdd_grad/tuple/control_dependency"
@@ -11005,42 +9278,6 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/gradients/CNN_layer1/Conv/Conv2D_grad/Const"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 4
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 4
-          }
-        }
-        tensor_content: "\024\000\000\000(\000\000\000\001\000\000\000\n\000\000\000"
-      }
-    }
-  }
-}
-node {
   name: "OptimizeLoss/gradients/CNN_layer1/Conv/Conv2D_grad/Conv2DBackpropInput"
   op: "Conv2DBackpropInput"
   input: "OptimizeLoss/gradients/CNN_layer1/Conv/Conv2D_grad/ShapeN"
@@ -11118,7 +9355,7 @@ node {
   name: "OptimizeLoss/gradients/CNN_layer1/Conv/Conv2D_grad/Conv2DBackpropFilter"
   op: "Conv2DBackpropFilter"
   input: "ExpandDims"
-  input: "OptimizeLoss/gradients/CNN_layer1/Conv/Conv2D_grad/Const"
+  input: "OptimizeLoss/gradients/CNN_layer1/Conv/Conv2D_grad/ShapeN:1"
   input: "OptimizeLoss/gradients/CNN_layer1/Conv/BiasAdd_grad/tuple/control_dependency"
   attr {
     key: "T"
@@ -11132,16 +9369,16 @@ node {
       list {
         shape {
           dim {
-            size: 20
+            size: -1
           }
           dim {
-            size: 40
+            size: -1
           }
           dim {
-            size: 1
+            size: -1
           }
           dim {
-            size: 10
+            size: -1
           }
         }
       }
@@ -11191,8 +9428,8 @@ node {
 node {
   name: "OptimizeLoss/gradients/CNN_layer1/Conv/Conv2D_grad/tuple/group_deps"
   op: "NoOp"
-  input: "^OptimizeLoss/gradients/CNN_layer1/Conv/Conv2D_grad/Conv2DBackpropInput"
   input: "^OptimizeLoss/gradients/CNN_layer1/Conv/Conv2D_grad/Conv2DBackpropFilter"
+  input: "^OptimizeLoss/gradients/CNN_layer1/Conv/Conv2D_grad/Conv2DBackpropInput"
 }
 node {
   name: "OptimizeLoss/gradients/CNN_layer1/Conv/Conv2D_grad/tuple/control_dependency"
@@ -13702,98 +11939,8 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/CNN_layer1/Conv/biases/Adam/Initializer/zeros/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@CNN_layer1/Conv/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        int_val: 10
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/CNN_layer1/Conv/biases/Adam/Initializer/zeros/Const"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@CNN_layer1/Conv/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 0.0
-      }
-    }
-  }
-}
-node {
   name: "OptimizeLoss/CNN_layer1/Conv/biases/Adam/Initializer/zeros"
-  op: "Fill"
-  input: "OptimizeLoss/CNN_layer1/Conv/biases/Adam/Initializer/zeros/shape_as_tensor"
-  input: "OptimizeLoss/CNN_layer1/Conv/biases/Adam/Initializer/zeros/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
+  op: "Const"
   attr {
     key: "_class"
     value {
@@ -13815,9 +11962,23 @@ node {
     }
   }
   attr {
-    key: "index_type"
+    key: "dtype"
     value {
-      type: DT_INT32
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 10
+          }
+        }
+        float_val: 0.0
+      }
     }
   }
 }
@@ -13949,98 +12110,8 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/CNN_layer1/Conv/biases/Adam_1/Initializer/zeros/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@CNN_layer1/Conv/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        int_val: 10
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/CNN_layer1/Conv/biases/Adam_1/Initializer/zeros/Const"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@CNN_layer1/Conv/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 0.0
-      }
-    }
-  }
-}
-node {
   name: "OptimizeLoss/CNN_layer1/Conv/biases/Adam_1/Initializer/zeros"
-  op: "Fill"
-  input: "OptimizeLoss/CNN_layer1/Conv/biases/Adam_1/Initializer/zeros/shape_as_tensor"
-  input: "OptimizeLoss/CNN_layer1/Conv/biases/Adam_1/Initializer/zeros/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
+  op: "Const"
   attr {
     key: "_class"
     value {
@@ -14062,9 +12133,23 @@ node {
     }
   }
   attr {
-    key: "index_type"
+    key: "dtype"
     value {
-      type: DT_INT32
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 10
+          }
+        }
+        float_val: 0.0
+      }
     }
   }
 }
@@ -14780,98 +12865,8 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/CNN_layer2/Conv/biases/Adam/Initializer/zeros/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@CNN_layer2/Conv/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        int_val: 10
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/CNN_layer2/Conv/biases/Adam/Initializer/zeros/Const"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@CNN_layer2/Conv/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 0.0
-      }
-    }
-  }
-}
-node {
   name: "OptimizeLoss/CNN_layer2/Conv/biases/Adam/Initializer/zeros"
-  op: "Fill"
-  input: "OptimizeLoss/CNN_layer2/Conv/biases/Adam/Initializer/zeros/shape_as_tensor"
-  input: "OptimizeLoss/CNN_layer2/Conv/biases/Adam/Initializer/zeros/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
+  op: "Const"
   attr {
     key: "_class"
     value {
@@ -14893,9 +12888,23 @@ node {
     }
   }
   attr {
-    key: "index_type"
+    key: "dtype"
     value {
-      type: DT_INT32
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 10
+          }
+        }
+        float_val: 0.0
+      }
     }
   }
 }
@@ -15027,98 +13036,8 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/CNN_layer2/Conv/biases/Adam_1/Initializer/zeros/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@CNN_layer2/Conv/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        int_val: 10
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/CNN_layer2/Conv/biases/Adam_1/Initializer/zeros/Const"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@CNN_layer2/Conv/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 0.0
-      }
-    }
-  }
-}
-node {
   name: "OptimizeLoss/CNN_layer2/Conv/biases/Adam_1/Initializer/zeros"
-  op: "Fill"
-  input: "OptimizeLoss/CNN_layer2/Conv/biases/Adam_1/Initializer/zeros/shape_as_tensor"
-  input: "OptimizeLoss/CNN_layer2/Conv/biases/Adam_1/Initializer/zeros/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
+  op: "Const"
   attr {
     key: "_class"
     value {
@@ -15140,9 +13059,23 @@ node {
     }
   }
   attr {
-    key: "index_type"
+    key: "dtype"
     value {
-      type: DT_INT32
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 10
+          }
+        }
+        float_val: 0.0
+      }
     }
   }
 }
@@ -15274,98 +13207,8 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/fully_connected/weights/Adam/Initializer/zeros/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@fully_connected/weights"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 2
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 2
-          }
-        }
-        tensor_content: "\n\000\000\000\010\000\000\000"
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/fully_connected/weights/Adam/Initializer/zeros/Const"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@fully_connected/weights"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 0.0
-      }
-    }
-  }
-}
-node {
   name: "OptimizeLoss/fully_connected/weights/Adam/Initializer/zeros"
-  op: "Fill"
-  input: "OptimizeLoss/fully_connected/weights/Adam/Initializer/zeros/shape_as_tensor"
-  input: "OptimizeLoss/fully_connected/weights/Adam/Initializer/zeros/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
+  op: "Const"
   attr {
     key: "_class"
     value {
@@ -15390,9 +13233,26 @@ node {
     }
   }
   attr {
-    key: "index_type"
+    key: "dtype"
     value {
-      type: DT_INT32
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 10
+          }
+          dim {
+            size: 8
+          }
+        }
+        float_val: 0.0
+      }
     }
   }
 }
@@ -15536,98 +13396,8 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/fully_connected/weights/Adam_1/Initializer/zeros/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@fully_connected/weights"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 2
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 2
-          }
-        }
-        tensor_content: "\n\000\000\000\010\000\000\000"
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/fully_connected/weights/Adam_1/Initializer/zeros/Const"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@fully_connected/weights"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 0.0
-      }
-    }
-  }
-}
-node {
   name: "OptimizeLoss/fully_connected/weights/Adam_1/Initializer/zeros"
-  op: "Fill"
-  input: "OptimizeLoss/fully_connected/weights/Adam_1/Initializer/zeros/shape_as_tensor"
-  input: "OptimizeLoss/fully_connected/weights/Adam_1/Initializer/zeros/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
+  op: "Const"
   attr {
     key: "_class"
     value {
@@ -15652,9 +13422,26 @@ node {
     }
   }
   attr {
-    key: "index_type"
+    key: "dtype"
     value {
-      type: DT_INT32
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 10
+          }
+          dim {
+            size: 8
+          }
+        }
+        float_val: 0.0
+      }
     }
   }
 }
@@ -15798,98 +13585,8 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/fully_connected/biases/Adam/Initializer/zeros/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@fully_connected/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        int_val: 8
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/fully_connected/biases/Adam/Initializer/zeros/Const"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@fully_connected/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 0.0
-      }
-    }
-  }
-}
-node {
   name: "OptimizeLoss/fully_connected/biases/Adam/Initializer/zeros"
-  op: "Fill"
-  input: "OptimizeLoss/fully_connected/biases/Adam/Initializer/zeros/shape_as_tensor"
-  input: "OptimizeLoss/fully_connected/biases/Adam/Initializer/zeros/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
+  op: "Const"
   attr {
     key: "_class"
     value {
@@ -15911,9 +13608,23 @@ node {
     }
   }
   attr {
-    key: "index_type"
+    key: "dtype"
     value {
-      type: DT_INT32
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 8
+          }
+        }
+        float_val: 0.0
+      }
     }
   }
 }
@@ -16045,98 +13756,8 @@ node {
   }
 }
 node {
-  name: "OptimizeLoss/fully_connected/biases/Adam_1/Initializer/zeros/shape_as_tensor"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@fully_connected/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        int_val: 8
-      }
-    }
-  }
-}
-node {
-  name: "OptimizeLoss/fully_connected/biases/Adam_1/Initializer/zeros/Const"
-  op: "Const"
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@fully_connected/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 0.0
-      }
-    }
-  }
-}
-node {
   name: "OptimizeLoss/fully_connected/biases/Adam_1/Initializer/zeros"
-  op: "Fill"
-  input: "OptimizeLoss/fully_connected/biases/Adam_1/Initializer/zeros/shape_as_tensor"
-  input: "OptimizeLoss/fully_connected/biases/Adam_1/Initializer/zeros/Const"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
+  op: "Const"
   attr {
     key: "_class"
     value {
@@ -16158,9 +13779,23 @@ node {
     }
   }
   attr {
-    key: "index_type"
+    key: "dtype"
     value {
-      type: DT_INT32
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 8
+          }
+        }
+        float_val: 0.0
+      }
     }
   }
 }
@@ -17961,13 +15596,13 @@ node {
   op: "Mul"
   input: "OptimizeLoss/beta1_power/read"
   input: "OptimizeLoss/train/beta1"
-  input: "^OptimizeLoss/train/update_words/embeddings/group_deps"
-  input: "^OptimizeLoss/train/update_CNN_layer1/Conv/weights/ApplyAdam"
   input: "^OptimizeLoss/train/update_CNN_layer1/Conv/biases/ApplyAdam"
-  input: "^OptimizeLoss/train/update_CNN_layer2/Conv/weights/ApplyAdam"
+  input: "^OptimizeLoss/train/update_CNN_layer1/Conv/weights/ApplyAdam"
   input: "^OptimizeLoss/train/update_CNN_layer2/Conv/biases/ApplyAdam"
-  input: "^OptimizeLoss/train/update_fully_connected/weights/ApplyAdam"
+  input: "^OptimizeLoss/train/update_CNN_layer2/Conv/weights/ApplyAdam"
   input: "^OptimizeLoss/train/update_fully_connected/biases/ApplyAdam"
+  input: "^OptimizeLoss/train/update_fully_connected/weights/ApplyAdam"
+  input: "^OptimizeLoss/train/update_words/embeddings/group_deps"
   attr {
     key: "T"
     value {
@@ -18038,13 +15673,13 @@ node {
   op: "Mul"
   input: "OptimizeLoss/beta2_power/read"
   input: "OptimizeLoss/train/beta2"
-  input: "^OptimizeLoss/train/update_words/embeddings/group_deps"
-  input: "^OptimizeLoss/train/update_CNN_layer1/Conv/weights/ApplyAdam"
   input: "^OptimizeLoss/train/update_CNN_layer1/Conv/biases/ApplyAdam"
-  input: "^OptimizeLoss/train/update_CNN_layer2/Conv/weights/ApplyAdam"
+  input: "^OptimizeLoss/train/update_CNN_layer1/Conv/weights/ApplyAdam"
   input: "^OptimizeLoss/train/update_CNN_layer2/Conv/biases/ApplyAdam"
-  input: "^OptimizeLoss/train/update_fully_connected/weights/ApplyAdam"
+  input: "^OptimizeLoss/train/update_CNN_layer2/Conv/weights/ApplyAdam"
   input: "^OptimizeLoss/train/update_fully_connected/biases/ApplyAdam"
+  input: "^OptimizeLoss/train/update_fully_connected/weights/ApplyAdam"
+  input: "^OptimizeLoss/train/update_words/embeddings/group_deps"
   attr {
     key: "T"
     value {
@@ -18113,15 +15748,15 @@ node {
 node {
   name: "OptimizeLoss/train/update"
   op: "NoOp"
-  input: "^OptimizeLoss/train/update_words/embeddings/group_deps"
-  input: "^OptimizeLoss/train/update_CNN_layer1/Conv/weights/ApplyAdam"
-  input: "^OptimizeLoss/train/update_CNN_layer1/Conv/biases/ApplyAdam"
-  input: "^OptimizeLoss/train/update_CNN_layer2/Conv/weights/ApplyAdam"
-  input: "^OptimizeLoss/train/update_CNN_layer2/Conv/biases/ApplyAdam"
-  input: "^OptimizeLoss/train/update_fully_connected/weights/ApplyAdam"
-  input: "^OptimizeLoss/train/update_fully_connected/biases/ApplyAdam"
   input: "^OptimizeLoss/train/Assign"
   input: "^OptimizeLoss/train/Assign_1"
+  input: "^OptimizeLoss/train/update_CNN_layer1/Conv/biases/ApplyAdam"
+  input: "^OptimizeLoss/train/update_CNN_layer1/Conv/weights/ApplyAdam"
+  input: "^OptimizeLoss/train/update_CNN_layer2/Conv/biases/ApplyAdam"
+  input: "^OptimizeLoss/train/update_CNN_layer2/Conv/weights/ApplyAdam"
+  input: "^OptimizeLoss/train/update_fully_connected/biases/ApplyAdam"
+  input: "^OptimizeLoss/train/update_fully_connected/weights/ApplyAdam"
+  input: "^OptimizeLoss/train/update_words/embeddings/group_deps"
 }
 node {
   name: "OptimizeLoss/train/value"
@@ -18321,31 +15956,31 @@ node {
 node {
   name: "init"
   op: "NoOp"
-  input: "^global_step/Assign"
-  input: "^words/embeddings/Assign"
-  input: "^CNN_layer1/Conv/weights/Assign"
   input: "^CNN_layer1/Conv/biases/Assign"
-  input: "^CNN_layer2/Conv/weights/Assign"
+  input: "^CNN_layer1/Conv/weights/Assign"
   input: "^CNN_layer2/Conv/biases/Assign"
-  input: "^fully_connected/weights/Assign"
-  input: "^fully_connected/biases/Assign"
-  input: "^OptimizeLoss/learning_rate/Assign"
-  input: "^OptimizeLoss/beta1_power/Assign"
-  input: "^OptimizeLoss/beta2_power/Assign"
-  input: "^OptimizeLoss/words/embeddings/Adam/Assign"
-  input: "^OptimizeLoss/words/embeddings/Adam_1/Assign"
-  input: "^OptimizeLoss/CNN_layer1/Conv/weights/Adam/Assign"
-  input: "^OptimizeLoss/CNN_layer1/Conv/weights/Adam_1/Assign"
+  input: "^CNN_layer2/Conv/weights/Assign"
   input: "^OptimizeLoss/CNN_layer1/Conv/biases/Adam/Assign"
   input: "^OptimizeLoss/CNN_layer1/Conv/biases/Adam_1/Assign"
-  input: "^OptimizeLoss/CNN_layer2/Conv/weights/Adam/Assign"
-  input: "^OptimizeLoss/CNN_layer2/Conv/weights/Adam_1/Assign"
+  input: "^OptimizeLoss/CNN_layer1/Conv/weights/Adam/Assign"
+  input: "^OptimizeLoss/CNN_layer1/Conv/weights/Adam_1/Assign"
   input: "^OptimizeLoss/CNN_layer2/Conv/biases/Adam/Assign"
   input: "^OptimizeLoss/CNN_layer2/Conv/biases/Adam_1/Assign"
-  input: "^OptimizeLoss/fully_connected/weights/Adam/Assign"
-  input: "^OptimizeLoss/fully_connected/weights/Adam_1/Assign"
+  input: "^OptimizeLoss/CNN_layer2/Conv/weights/Adam/Assign"
+  input: "^OptimizeLoss/CNN_layer2/Conv/weights/Adam_1/Assign"
+  input: "^OptimizeLoss/beta1_power/Assign"
+  input: "^OptimizeLoss/beta2_power/Assign"
   input: "^OptimizeLoss/fully_connected/biases/Adam/Assign"
   input: "^OptimizeLoss/fully_connected/biases/Adam_1/Assign"
+  input: "^OptimizeLoss/fully_connected/weights/Adam/Assign"
+  input: "^OptimizeLoss/fully_connected/weights/Adam_1/Assign"
+  input: "^OptimizeLoss/learning_rate/Assign"
+  input: "^OptimizeLoss/words/embeddings/Adam/Assign"
+  input: "^OptimizeLoss/words/embeddings/Adam_1/Assign"
+  input: "^fully_connected/biases/Assign"
+  input: "^fully_connected/weights/Assign"
+  input: "^global_step/Assign"
+  input: "^words/embeddings/Assign"
 }
 node {
   name: "init_1"
@@ -20163,11 +17798,49 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/boolean_mask/Gather"
-  op: "Gather"
+  name: "report_uninitialized_variables/boolean_mask/GatherV2/axis"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+        }
+        int_val: 0
+      }
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/boolean_mask/GatherV2"
+  op: "GatherV2"
   input: "report_uninitialized_variables/boolean_mask/Reshape"
   input: "report_uninitialized_variables/boolean_mask/Squeeze"
+  input: "report_uninitialized_variables/boolean_mask/GatherV2/axis"
   device: "/device:CPU:0"
+  attr {
+    key: "Taxis"
+    value {
+      type: DT_INT32
+    }
+  }
   attr {
     key: "Tindices"
     value {
@@ -20190,12 +17863,6 @@ node {
           }
         }
       }
-    }
-  }
-  attr {
-    key: "validate_indices"
-    value {
-      b: true
     }
   }
 }
@@ -20266,7 +17933,7 @@ node {
 node {
   name: "concat"
   op: "ConcatV2"
-  input: "report_uninitialized_variables/boolean_mask/Gather"
+  input: "report_uninitialized_variables/boolean_mask/GatherV2"
   input: "report_uninitialized_resources/Const"
   input: "concat/axis"
   attr {
@@ -22106,11 +19773,49 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/boolean_mask/Gather"
-  op: "Gather"
+  name: "report_uninitialized_variables_1/boolean_mask/GatherV2/axis"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+        }
+        int_val: 0
+      }
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/boolean_mask/GatherV2"
+  op: "GatherV2"
   input: "report_uninitialized_variables_1/boolean_mask/Reshape"
   input: "report_uninitialized_variables_1/boolean_mask/Squeeze"
+  input: "report_uninitialized_variables_1/boolean_mask/GatherV2/axis"
   device: "/device:CPU:0"
+  attr {
+    key: "Taxis"
+    value {
+      type: DT_INT32
+    }
+  }
   attr {
     key: "Tindices"
     value {
@@ -22135,12 +19840,6 @@ node {
       }
     }
   }
-  attr {
-    key: "validate_indices"
-    value {
-      b: true
-    }
-  }
 }
 node {
   name: "init_2"
@@ -22158,8 +19857,8 @@ node {
   name: "group_deps_1"
   op: "NoOp"
   input: "^init_2"
-  input: "^init_all_tables"
   input: "^init_3"
+  input: "^init_all_tables"
 }
 node {
   name: "Merge/MergeSummary"
@@ -22237,7 +19936,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
         }
-        string_val: "_temp_2590ef263a3f40dd9d119cf0822abd80/part"
+        string_val: "_temp_41f7c64120bb45f29ae71ca83e8399aa/part"
       }
     }
   }
@@ -22618,8 +20317,8 @@ node {
   name: "save/Identity"
   op: "Identity"
   input: "save/Const"
-  input: "^save/control_dependency"
   input: "^save/MergeV2Checkpoints"
+  input: "^save/control_dependency"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -24046,14 +21745,6 @@ node {
   op: "NoOp"
   input: "^save/Assign"
   input: "^save/Assign_1"
-  input: "^save/Assign_2"
-  input: "^save/Assign_3"
-  input: "^save/Assign_4"
-  input: "^save/Assign_5"
-  input: "^save/Assign_6"
-  input: "^save/Assign_7"
-  input: "^save/Assign_8"
-  input: "^save/Assign_9"
   input: "^save/Assign_10"
   input: "^save/Assign_11"
   input: "^save/Assign_12"
@@ -24064,11 +21755,19 @@ node {
   input: "^save/Assign_17"
   input: "^save/Assign_18"
   input: "^save/Assign_19"
+  input: "^save/Assign_2"
   input: "^save/Assign_20"
   input: "^save/Assign_21"
   input: "^save/Assign_22"
   input: "^save/Assign_23"
   input: "^save/Assign_24"
+  input: "^save/Assign_3"
+  input: "^save/Assign_4"
+  input: "^save/Assign_5"
+  input: "^save/Assign_6"
+  input: "^save/Assign_7"
+  input: "^save/Assign_8"
+  input: "^save/Assign_9"
 }
 node {
   name: "save/restore_all"
