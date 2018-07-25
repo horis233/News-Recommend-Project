@@ -71,7 +71,7 @@ def handle_message(msg):
     if (news is None
         or 'class' not in news
         or news['class'] not in news_classes.classes):
-        print( news is None)
+        #print( news is None)
         print('Skipping processing...')
         return
 

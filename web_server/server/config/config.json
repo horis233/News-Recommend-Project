@@ -1,5 +1,5 @@
 
 {
-  "mongoDbUri": "mongodb://localhost/top-news",
+  "mongoDbUri": "mongodb://horis233:horis233@ds029496.mlab.com:29496/horis_tapnews",
   "jwtSecret": "a secret phrase!!"
 }

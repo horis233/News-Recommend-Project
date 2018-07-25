@@ -38,6 +38,7 @@ while True:
     num_of_news_news = 0
 
     for news in news_list:
+        # print(news)
         news_digest = hashlib.md5(news['title'].encode('utf-8')).hexdigest()
 
         if redis_client.get(news_digest) is None:

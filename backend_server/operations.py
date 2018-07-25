@@ -26,11 +26,9 @@ CLICK_LOGS_TABLE_NAME = 'click_logs'
 NEWS_LIMIT = 100
 NEWS_LIST_BATCH_SIZE = 10
 USER_NEWS_TIME_OUT_IN_SECONDS = 60
-
-LOG_CLICKS_TASK_QUEUE_URL = "amqp://evvloemh:VyrLUwE7s7DfZat3-y2tTwuQEcejR2VO@emu.rmq.cloudamqp.com/evvloemh"
-LOG_CLICKS_TASK_QUEUE_NAME = "LOG_CLICKS_TASK_QUEUE"
 redis_client = redis.StrictRedis(REDIS_HOST, REDIS_PORT, db=0)
-cloudAMQP_client = CloudAMQPClient(LOG_CLICKS_TASK_QUEUE_URL, LOG_CLICKS_TASK_QUEUE_NAME)
+
+
 
 def getOneNews():
     db = mongodb_client.get_db()
@@ -78,6 +76,9 @@ def getNewsSummariesForUser(user_id, page_num):
 
 def logNewsClickForUser(user_id, news_id):
 
+    LOG_CLICKS_TASK_QUEUE_URL = "amqp://evvloemh:VyrLUwE7s7DfZat3-y2tTwuQEcejR2VO@emu.rmq.cloudamqp.com/evvloemh"
+    LOG_CLICKS_TASK_QUEUE_NAME = "LOG_CLICKS_TASK_QUEUE"
+    cloudAMQP_client = CloudAMQPClient(LOG_CLICKS_TASK_QUEUE_URL, LOG_CLICKS_TASK_QUEUE_NAME)
     message = {'userId': user_id, 'newsId': news_id, 'timestamp': datetime.utcnow()}
 
     db = mongodb_client.get_db()

@@ -1,6 +1,6 @@
 #!/bin/bash
-service redis_6379 start
-service mongod start
+#service redis_6379 start
+#service mongod start
 fuser -k 6060/tcp
 
 pip3 install -r requirements.txt
@@ -16,4 +16,4 @@ python3 server.py &
 echo "=================================================="
 read -p "PRESS [ENTER] TO TERMINATE PROCESSES." PRESSKEY
 
-killall python3
+# killall python3

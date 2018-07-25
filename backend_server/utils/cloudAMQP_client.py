@@ -13,6 +13,10 @@ class CloudAMQPClient:
 
   # Send a message
   def sendMessage(self, message):
+    if self.connection.is_closed:
+        #reconnect
+        print("mq block")
+
     self.channel.basic_publish(exchange='',
                               routing_key = self.queue_name,
                               body = json.dumps(message))
@@ -26,7 +30,7 @@ class CloudAMQPClient:
       self.channel.basic_ack(method_frame.delivery_tag)
       return json.loads(body)
     else:
-      print("No message returned.")
+      # print("No message returned.")
       return None
 
   # BlockingConnection.sleep is a safer way to sleep than time.sleep(). This
