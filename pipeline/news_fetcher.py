@@ -16,7 +16,6 @@ SCRAPE_NEWS_TASK_QUEUE_NAME = "top-news-SCRAPE_NEWS_TASK_QUEUE"
 
 SLEEP_TIME_IN_SECONDS = 5
 
-dedupe_news_queue_client = CloudAMQPClient(DEDUPE_NEWS_TASK_QUEUE_URL, DEDUPE_NEWS_TASK_QUEUE_NAME)
 scrape_news_queue_client = CloudAMQPClient(SCRAPE_NEWS_TASK_QUEUE_URL, SCRAPE_NEWS_TASK_QUEUE_NAME)
 
 
@@ -32,7 +31,7 @@ def handle_message(msg):
     article.download()
     article.parse()
     task['text'] = article.text
-
+    dedupe_news_queue_client = CloudAMQPClient(DEDUPE_NEWS_TASK_QUEUE_URL, DEDUPE_NEWS_TASK_QUEUE_NAME)
     dedupe_news_queue_client.sendMessage(task)
 
 while True:

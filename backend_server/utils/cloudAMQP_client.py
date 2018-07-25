@@ -15,7 +15,7 @@ class CloudAMQPClient:
   def sendMessage(self, message):
     if self.connection.is_closed:
         #reconnect
-        print("mq block")
+        print("mq block: %s" %(message))
 
     self.channel.basic_publish(exchange='',
                               routing_key = self.queue_name,
@@ -26,7 +26,7 @@ class CloudAMQPClient:
   def getMessage(self):
     method_frame, header_frame, body = self.channel.basic_get(self.queue_name)
     if method_frame:
-      print("[x] Received message from %s:%s" % (self.queue_name, body))
+      print("[x] Received message from %s" % (self.queue_name))
       self.channel.basic_ack(method_frame.delivery_tag)
       return json.loads(body)
     else:
