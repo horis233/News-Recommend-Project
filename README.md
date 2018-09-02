@@ -11,3 +11,6 @@ Build a single-page web.
 
 ## System Overview
 ![](https://github.com/horis233/News-Recommend-Project/blob/master/images_for_readme/1.png)
+
+## Data Visualization Page for Top News
+* Implemented a data Visualization System (D3.js);
