@@ -1,30 +1,36 @@
-var createError = require('http-errors');
+var bodyParser = require('body-parser');
 var express = require('express');
+var index = require('./routes/index');
+var user_data = require('./routes/dataVisulization');
 var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+//var cors = require('cors');
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, '../client/build'));
+//app.set('views', path.join(__dirname, 'views'));
+app.use('/static', express.static(path.join(__dirname, '../client/build/static/')));
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.all('*', function(req,res,next){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-with");
+  next();
+});
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use(cors());
+// all request convert into json
+app.use(bodyParser.json());
+
+app.use('/', index);
+app.use('/userdata',user_data);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  var err = new Error('Not Found');
+  err.status = 404;
+  res.send('404 not found');
 });
 
 // error handler
