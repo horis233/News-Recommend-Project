@@ -2,6 +2,11 @@ import React from 'react';
 import  './PanelHeader.css';
 
 class PanelHeader extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = { title:''}
+  }
     render(){
         return(
             <div className="panel-header">
@@ -15,8 +20,6 @@ class PanelHeader extends React.Component {
     };
 }
 
-PanelHeader.propTypes = {
-    title: React.PropTypes.string
-}
+
 
 export default PanelHeader;

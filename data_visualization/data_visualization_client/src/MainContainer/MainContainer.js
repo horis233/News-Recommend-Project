@@ -5,8 +5,8 @@ import Range from '../Range/Range.js';
 
 import UserTrend from '../UserTrend/UserTrend.js';
 import ActiveUserChart from '../ActiveUserChart/ActiveUserChart.js';
-import DevicePieChart from '../DevicePieChart/DevicePieChart.js';
-import NewsCategory from '../NewsCategory/NewsCategory.js';
+// import DevicePieChart from '../DevicePieChart/DevicePieChart.js';
+// import NewsCategory from '../NewsCategory/NewsCategory.js';
 
 const category = ['technology', 'music', 'education','sports','politics', 'weather','others'];
 
@@ -25,13 +25,13 @@ class MainContainer extends React.Component{
         return(
             <div>
                 <div className="row">
-                    <div className="col-md-5 custom_padding" >
+                    {/* <div className="col-md-5 custom_padding" >
                         <Panel>
                             <PanelHeader title="User Device">
                             </PanelHeader>
                             <DevicePieChart data={this.state.user_device}/>
                         </Panel>
-                    </div>
+                    </div> */}
                     <div className="col-md-7 custom_padding" >
                         <Panel>
                             <PanelHeader title="User Trend (Daily Active/Daily New)">
@@ -54,14 +54,14 @@ class MainContainer extends React.Component{
                             </Panel>
                     </div>
                     <div className="row">
-                        <div className="col-md-5 custom_padding" >
+                        {/* <div className="col-md-5 custom_padding" >
                             <Panel>
                                 <PanelHeader title="News Category">
                                 </PanelHeader>
                             <NewsCategory data = {this.state.user_news_category}/>
 
                             </Panel>
-                        </div>
+                        </div> */}
 
                     </div>
                 </div>
