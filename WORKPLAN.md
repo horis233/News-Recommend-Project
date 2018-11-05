@@ -588,7 +588,7 @@ const news_url = 'http://' + window.location.hostname + ':3000' + '/news';
 const request = new Request(news_url, {method:'GET', cache:false});
 ```
 - Fetch + .then : Http Request & Promise
-* res.json -> Ansynchrons : so we need another ".then" 調用JSON
+* res.json -> Ansynchrons : so we need another ".then" get JSON
 * After we got JSON, deal with the news data
 * If there is no news on web, directly give the new one, but if not, "concat" to the old ones
 
@@ -875,7 +875,7 @@ module.exports = router;
 npm install jayson --save
 ```
 
-- Open a rpc_client.js with a helper method to let news.js could "getNoews()" from our backend server
+- Open a rpc_client.js with a helper method to let news.js could "getNews()" from our backend server
 ```js
 var jayson = require('jayson');
 
@@ -1620,7 +1620,7 @@ from cloudAMQP_client import CloudAMQPClient
 
 DEDUPE_NEWS_TASK_QUEUE_URL =
 DEDUPE_NEWS_TASK_QUEUE_NAME = "top-new-DEDUPE_NEWS_TASK_QUEUE_NAME"
-SCRAPE_NEWS_TASK_QUEUE_URL = "
+SCRAPE_NEWS_TASK_QUEUE_URL = ""
 SCRAPE_NEWS_TASK_QUEUE_NAME = "top-news-SCRAPE_NEWS_TASK_QUEUE"
 
 SLEEP_TIME_IN_SECONDS = 5
@@ -1812,7 +1812,7 @@ NEWS_SOURCES = [
 - JavaScript Destruction (ES6)
 [Destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
 
-- 直接把 Object 展開
+- Open Object
 ```js
 const LoginForm = ({
   onSubmit,
@@ -1966,17 +1966,17 @@ return;
 
 ![Auth](./image/Auth.png)
 
-#### 前端：
-1. 只能判斷 localStorage 是否有 token，但實際判斷用戶身份，還是握在Server端
-2. SignUp Page: 直接Post Request給後端
-3. Login Page: 直接 Post Request 給後端
-4. Base: React Router 若 User 沒有登入 redirect 到 Login
+#### front-end：
+1. check if there is a token in localStorage
+2. SignUp Page: Post Request to back end
+3. Login Page: Post Request to back end
+4. Base: React Router if User did not login redirect to Login page
 
-#### 後端：
-1. 處理 SignUp 的 Request，檢查input，將密碼 salt + Hash 之後，將用戶email & password 存入 DB (validator + bcrypt + passport)
-2. 處理 Login的 Request，比對密碼 (passport)
-( passport + mongoose 處理所有 DataBase間的連接，與密碼比對)
-3. loadMoreNews() 被調用時，會透過 auth_checker 檢查存在前端的 token 是否正確 (jwt)
+#### back-end：
+1. handle Request of SignUp，check input， salt + Hash the password，save email & password into DB (validator + bcrypt + passport)
+2. handle the Request of Login，compare PassWord (passport)
+( passport + mongoose handle connection between dataBase，compare password)
+3. when loadMoreNews() is loading，by using auth_checker check token (jwt)
 
 ## Login
 ```
