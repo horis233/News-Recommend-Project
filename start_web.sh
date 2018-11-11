@@ -1,4 +1,3 @@
-
 #!/bin/bash
 service redis_6379 start
 
@@ -6,7 +5,7 @@ service redis_6379 start
 
 cd ./news_recommendation_service
 python3 click_log_processor.py &
-python3 recommendation_service.py &
+python3 recommend_service.py &
 
 cd ../backend_server
 python3 service.py &
