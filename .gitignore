@@ -3,7 +3,7 @@
 /tmp
 /public
 *.pyc
-
+__pychache__
 
 # dependencies
 node_modules/

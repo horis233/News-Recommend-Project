@@ -3,16 +3,17 @@ import os
 import sys
 
 from datetime import datetime
+from sets import Set
 
 # import common package in parent directory
-sys.path.append(os.path.join(os.path.dirname(__file__), '../backend_server/', 'utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
 import mongodb_client
 
 PREFERENCE_MODEL_TABLE_NAME = "user_preference_model"
 NEWS_TABLE_NAME = "news"
 
-NUM_OF_CLASSES = 17
+NUM_OF_CLASSES = 7
 
 # Start MongoDB before running following tests.
 def test_basic():
@@ -29,7 +30,7 @@ def test_basic():
     assert model is not None
     assert len(model['preference']) == NUM_OF_CLASSES
 
-    print('test_basic passed!')
+    print 'test_basic passed!'
 
 
 if __name__ == "__main__":
