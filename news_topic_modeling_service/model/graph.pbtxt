@@ -1185,6 +1185,35 @@ node {
   }
 }
 node {
+  name: "words/embedding_lookup/Identity"
+  op: "Identity"
+  input: "words/embedding_lookup"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 100
+          }
+          dim {
+            size: 40
+          }
+        }
+      }
+    }
+  }
+}
+node {
   name: "ExpandDims/dim"
   op: "Const"
   attr {
@@ -1217,7 +1246,7 @@ node {
 node {
   name: "ExpandDims"
   op: "ExpandDims"
-  input: "words/embedding_lookup"
+  input: "words/embedding_lookup/Identity"
   input: "ExpandDims/dim"
   attr {
     key: "T"
@@ -3808,6 +3837,12 @@ node {
     }
   }
   attr {
+    key: "Truncate"
+    value {
+      b: false
+    }
+  }
+  attr {
     key: "_output_shapes"
     value {
       list {
@@ -4782,7 +4817,7 @@ node {
       list {
         shape {
           dim {
-            size: -1
+            size: 1
           }
         }
       }
@@ -5224,7 +5259,7 @@ node {
   }
 }
 node {
-  name: "softmax_cross_entropy_loss/ToFloat_2"
+  name: "softmax_cross_entropy_loss/ToFloat"
   op: "Cast"
   input: "softmax_cross_entropy_loss/Size"
   attr {
@@ -5240,6 +5275,12 @@ node {
     }
   }
   attr {
+    key: "Truncate"
+    value {
+      b: false
+    }
+  }
+  attr {
     key: "_output_shapes"
     value {
       list {
@@ -5250,7 +5291,7 @@ node {
   }
 }
 node {
-  name: "softmax_cross_entropy_loss/ToFloat_3"
+  name: "softmax_cross_entropy_loss/ToFloat_1"
   op: "Cast"
   input: "softmax_cross_entropy_loss/Reshape"
   attr {
@@ -5266,6 +5307,12 @@ node {
     }
   }
   attr {
+    key: "Truncate"
+    value {
+      b: false
+    }
+  }
+  attr {
     key: "_output_shapes"
     value {
       list {
@@ -5278,8 +5325,8 @@ node {
 node {
   name: "softmax_cross_entropy_loss/div"
   op: "RealDiv"
-  input: "softmax_cross_entropy_loss/ToFloat_2"
-  input: "softmax_cross_entropy_loss/ToFloat_3"
+  input: "softmax_cross_entropy_loss/ToFloat"
+  input: "softmax_cross_entropy_loss/ToFloat_1"
   attr {
     key: "T"
     value {
@@ -6490,7 +6537,6 @@ node {
     value {
       list {
         shape {
-          unknown_rank: true
         }
       }
     }
@@ -6634,7 +6680,6 @@ node {
     value {
       list {
         shape {
-          unknown_rank: true
         }
       }
     }
@@ -8285,7 +8330,7 @@ node {
       list {
         shape {
           dim {
-            size: -1
+            size: 4
           }
         }
       }
@@ -8314,7 +8359,18 @@ node {
     value {
       list {
         shape {
-          unknown_rank: true
+          dim {
+            size: -1
+          }
+          dim {
+            size: -1
+          }
+          dim {
+            size: -1
+          }
+          dim {
+            size: -1
+          }
         }
       }
     }
@@ -8342,7 +8398,18 @@ node {
     value {
       list {
         shape {
-          unknown_rank: true
+          dim {
+            size: -1
+          }
+          dim {
+            size: -1
+          }
+          dim {
+            size: -1
+          }
+          dim {
+            size: -1
+          }
         }
       }
     }
@@ -8364,7 +8431,18 @@ node {
     value {
       list {
         shape {
-          unknown_rank: true
+          dim {
+            size: -1
+          }
+          dim {
+            size: 22
+          }
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
         }
       }
     }
@@ -8387,11 +8465,28 @@ node {
     }
   }
   attr {
+    key: "Truncate"
+    value {
+      b: false
+    }
+  }
+  attr {
     key: "_output_shapes"
     value {
       list {
         shape {
-          unknown_rank: true
+          dim {
+            size: -1
+          }
+          dim {
+            size: 22
+          }
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
         }
       }
     }
@@ -8419,7 +8514,15 @@ node {
     value {
       list {
         shape {
-          unknown_rank: true
+          dim {
+            size: -1
+          }
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
         }
       }
     }
@@ -8453,7 +8556,18 @@ node {
     value {
       list {
         shape {
-          unknown_rank: true
+          dim {
+            size: -1
+          }
+          dim {
+            size: -1
+          }
+          dim {
+            size: -1
+          }
+          dim {
+            size: -1
+          }
         }
       }
     }
@@ -8475,7 +8589,18 @@ node {
     value {
       list {
         shape {
-          unknown_rank: true
+          dim {
+            size: -1
+          }
+          dim {
+            size: 22
+          }
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
         }
       }
     }
@@ -8717,13 +8842,13 @@ node {
             size: -1
           }
           dim {
-            size: -1
+            size: 41
           }
           dim {
-            size: -1
+            size: 10
           }
           dim {
-            size: -1
+            size: 1
           }
         }
       }
@@ -8788,16 +8913,16 @@ node {
       list {
         shape {
           dim {
-            size: -1
+            size: 20
           }
           dim {
-            size: -1
+            size: 10
           }
           dim {
-            size: -1
+            size: 1
           }
           dim {
-            size: -1
+            size: 10
           }
         }
       }
@@ -9298,13 +9423,13 @@ node {
             size: -1
           }
           dim {
-            size: -1
+            size: 100
           }
           dim {
-            size: -1
+            size: 40
           }
           dim {
-            size: -1
+            size: 1
           }
         }
       }
@@ -9369,16 +9494,16 @@ node {
       list {
         shape {
           dim {
-            size: -1
+            size: 20
           }
           dim {
-            size: -1
+            size: 40
           }
           dim {
-            size: -1
+            size: 1
           }
           dim {
-            size: -1
+            size: 10
           }
         }
       }
@@ -9516,7 +9641,7 @@ node {
 node {
   name: "OptimizeLoss/gradients/ExpandDims_grad/Shape"
   op: "Shape"
-  input: "words/embedding_lookup"
+  input: "words/embedding_lookup/Identity"
   attr {
     key: "T"
     value {
@@ -9636,6 +9761,12 @@ node {
     key: "SrcT"
     value {
       type: DT_INT64
+    }
+  }
+  attr {
+    key: "Truncate"
+    value {
+      b: false
     }
   }
   attr {
@@ -19936,7 +20067,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
         }
-        string_val: "_temp_41f7c64120bb45f29ae71ca83e8399aa/part"
+        string_val: "_temp_d27b0d1ae6b44c928e93f0a33e98b32d/part"
       }
     }
   }
@@ -21775,5 +21906,5 @@ node {
   input: "^save/restore_shard"
 }
 versions {
-  producer: 26
+  producer: 27
 }

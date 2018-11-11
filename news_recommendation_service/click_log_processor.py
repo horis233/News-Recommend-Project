@@ -2,43 +2,39 @@
 
 '''
 Time decay model:
-
 If selected:
 p = (1-α)p + α
-
 If not:
 p = (1-α)p
-
 Where p is the selection probability, and α is the degree of weight decrease.
 The result of this is that the nth most recent selection will have a weight of
 (1-α)^n. Using a coefficient value of 0.05 as an example, the 10th most recent
 selection would only have half the weight of the most recent. Increasing epsilon
 would bias towards more recent results more.
 '''
+
+import news_classes
 import os
 import sys
 
-import news_classes
 # import common package in parent directory
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../backend_server/', 'utils'))
 
 import mongodb_client
-import config_reader as reader
 from cloudAMQP_client import CloudAMQPClient
 
-
-config = reader.read_config()
 # Don't modify this value unless you know what you are doing.
-NUM_OF_CLASSES = config.getint('PRMODEL', 'NUM_OF_CLASSES')
+NUM_OF_CLASSES = 7
 INITIAL_P = 1.0 / NUM_OF_CLASSES
-ALPHA = config.getfloat('PRMODEL', 'ALPHA')
+ALPHA = 0.1
 
-LOG_CLICKS_TASK_QUEUE_URL = config.get('PIPELINE', 'LOG_CLICKS_QUEUE_URL')
-LOG_CLICKS_TASK_QUEUE_NAME = config.get('PIPELINE', 'LOG_CLICKS_QUEUE_NAME')
-SLEEP_TIME_IN_SECONDS = config.getint('PIPELINE', 'LOG_QUEUE_SLEEP_TIME')
+SLEEP_TIME_IN_SECONDS = 3
 
-PREFERENCE_MODEL_TABLE_NAME = config.get('PRMODEL', 'PRMODEL_TABLE_NAME')
-NEWS_TABLE_NAME = config.get('NEWS', 'NEWS_TABLE_NAME')
+LOG_CLICKS_TASK_QUEUE_URL = "amqp://evvloemh:VyrLUwE7s7DfZat3-y2tTwuQEcejR2VO@emu.rmq.cloudamqp.com/evvloemh"
+LOG_CLICKS_TASK_QUEUE_NAME = "LOG_CLICKS_TASK_QUEUE"
+
+PREFERENCE_MODEL_TABLE_NAME = "user_preference_model"
+NEWS_TABLE_NAME = "news"
 
 cloudAMQP_client = CloudAMQPClient(LOG_CLICKS_TASK_QUEUE_URL, LOG_CLICKS_TASK_QUEUE_NAME)
 
@@ -60,7 +56,7 @@ def handle_message(msg):
 
     # If model not exists, create a new one
     if model is None:
-        print 'Creating preference model for new user: %s' % userId
+        print('Creating preference model for new user: %s' % userId)
         new_model = {'userId' : userId}
         preference = {}
         for i in news_classes.classes:
@@ -68,19 +64,15 @@ def handle_message(msg):
         new_model['preference'] = preference
         model = new_model
 
-    print 'Updating preference model for new user: %s' % userId
+    print('Updating preference model for new user: %s' % userId)
 
     # Update model using time decaying method
     news = db[NEWS_TABLE_NAME].find_one({'digest': newsId})
-    if news is None:
-        print 'Retrieved news is none'
-        print 'Skipping processing....'
-        return
-    
-    if ( 'class' not in news
+    if (news is None
+        or 'class' not in news
         or news['class'] not in news_classes.classes):
-        print 'There is no "class" in news or this "class" is not in the category'
-        print 'Skipping processing....'
+        #print( news is None)
+        print('Skipping processing...')
         return
 
     click_class = news['class']
@@ -90,10 +82,11 @@ def handle_message(msg):
     model['preference'][click_class] = float((1 - ALPHA) * old_p + ALPHA)
 
     # Update not clicked classes.
-    for i, _prob in model['preference'].iteritems():
+    for i, prob in model['preference'].items():
         if not i == click_class:
             model['preference'][i] = float((1 - ALPHA) * model['preference'][i])
 
+    print(model)
     db[PREFERENCE_MODEL_TABLE_NAME].replace_one({'userId': userId}, model, upsert=True)
 
 def run():
@@ -105,7 +98,7 @@ def run():
                 try:
                     handle_message(msg)
                 except Exception as e:
-                    print e
+                    print(e)
                     pass
             # Remove this if this becomes a bottleneck.
             cloudAMQP_client.sleep(SLEEP_TIME_IN_SECONDS)

@@ -1,9 +1,9 @@
 classes = [
-    'business',
-    'technology',
-    'entertainment',
-    'general',
-    'health',
-    'science',
-    'sports'
+  "International",
+  "Business",
+  "Technology",
+  "Entertainment",
+  "Sports",
+  "Health",
+  "Crime"
 ]
