@@ -40,7 +40,7 @@ class SignUpPage extends React.Component {
     }
 
     // Post signup data.
-    const url = 'http://' + window.location.hostname + ':3000/auth/signup';
+    const url = 'https://' + window.location.hostname + '/auth/signup';
     const request = new Request(url, {
       method: 'POST',
       headers: { // otherwise the server would not understand
