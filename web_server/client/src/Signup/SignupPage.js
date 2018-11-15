@@ -41,69 +41,41 @@ class SignUpPage extends React.Component {
 
     // Post signup data.
     const url = 'http://' + window.location.hostname + ':3000/auth/signup';
-    const request = new Request(url,
-      {
-        method: 'POST',
-        headers: { // otherwise the server would not understand
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: this.state.user.email,
-          password: this.state.user.password
-        }) // should serialize it
-    }
-  );
+    const request = new Request(url, {
+      method: 'POST',
+      headers: { // otherwise the server would not understand
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: this.state.user.email,
+        password: this.state.user.password
+      }) // should serialize it
+    });
 
     fetch(request)
-    .then(res => {
-      if (res.status === 200) {
-        this.setState({
-          errors: {}
-        });
+      .then(res => {
+        if (res.status === 200) {
+          this.setState({
+            errors: {}
+          });
 
-        // change the current URL to /login
-        this.context.router.replace('/login');
+          // change the current URL to /login
+          this.context.router.replace('/login');
 
-      } else {
-        res.json().then(function(json) {
-          console.log(json);
-          const errors = json.errors ? json.errors : {};
-          errors.summary = json.message;
-          console.log(this.state.errors);
-          this.setState({errors});
-        }.bind(this));
-      }
+        } else {
+          res.json()
+            .then(function (json) {
+              console.log(json);
+              const errors = json.errors ? json.errors : {};
+              errors.summary = json.message;
+              console.log(this.state.errors);
+              this.setState({
+                errors
+              });
+            }.bind(this));
+        }
       })
-
-    // fetch('http://localhost:3000/auth/signup', {
-    //   method: 'POST',
-    //   cache: false,
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     email: email,
-    //     password: password
-    //   })
-    // }).then(response => {
-    //   if (response.status === 200) {
-    //     this.setState({
-    //       errors: {}
-    //     });
-    //
-    //     // change the current URL to /login
-    //     this.context.router.replace('/login');
-    //   } else {
-    //     response.json().then(function(json) {
-    //       console.log(json);
-    //       const errors = json.errors ? json.errors : {};
-    //       errors.summary = json.message;
-    //       this.setState({errors});
-    //     }.bind(this));
-    //   }
-    // });
 
   }
 
@@ -112,7 +84,9 @@ class SignUpPage extends React.Component {
     const user = this.state.user;
     user[field] = event.target.value;
 
-    this.setState({user});
+    this.setState({
+      user
+    });
 
     const errors = this.state.errors;
     if (this.state.user.password !== this.state.user.confirm_password) {
@@ -120,16 +94,25 @@ class SignUpPage extends React.Component {
     } else {
       errors.password = '';
     }
-    this.setState({errors});
+    this.setState({
+      errors
+    });
   }
 
   render() {
-    return (
-      <SignUpForm
-        onSubmit={(e) => this.processForm(e)}
-        onChange={(e) => this.changeUser(e)}
-        errors={this.state.errors}
-        user={this.state.user}
+    return ( <
+      SignUpForm onSubmit = {
+        (e) => this.processForm(e)
+      }
+      onChange = {
+        (e) => this.changeUser(e)
+      }
+      errors = {
+        this.state.errors
+      }
+      user = {
+        this.state.user
+      }
       />
     );
   }
