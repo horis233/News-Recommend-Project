@@ -1,6 +1,6 @@
 
 #!/bin/bash
-service redis_6379 start
+# service redis_6379 start
 
 #pip3 install -r requirements.txt
 
