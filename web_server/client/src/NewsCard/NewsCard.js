@@ -14,9 +14,9 @@ class NewsCard extends React.Component {
 
 	sendClickLog() {
 		const url =
-			'http://' +
+			'https://' +
 			window.location.hostname +
-			':3000/news/userId/' +
+			'/news/userId/' +
 			Auth.getEmail() +
 			'/newsId/' +
 			this.props.news.digest;
