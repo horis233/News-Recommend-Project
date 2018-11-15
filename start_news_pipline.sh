@@ -12,4 +12,4 @@ python3 news_deduper.py &
 echo "=================================================="
 read -p "PRESS [ENTER] TO TERMINATE PROCESSES." PRESSKEY
 
-kill $(jobs -p)
+#kill $(jobs -p)
