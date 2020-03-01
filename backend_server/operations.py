@@ -116,7 +116,7 @@ def searchNews(keyword, page_num):
         print (search)
 
         total_news = list(db[NEWS_TABLE_NAME].find({'title':{'$regex':re.compile(search)}}).sort([('publishedAt', -1)]).limit(NEWS_LIMIT))
-        total_news_digests = map(lambda x:x['digest'], total_news)
+        total_news_digests = [x['digest'] for x in total_news]
         print(total_news)
 
         # redis_client.set(key, pickle.dumps(total_news_digests))

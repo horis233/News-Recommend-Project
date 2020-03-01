@@ -15,7 +15,7 @@ SERVER_PORT = 4040
 
 def add(num1, num2):
     """Test Method"""
-    print("Add is called with %d and %d " %(num1, num2))
+    print(("Add is called with %d and %d " %(num1, num2)))
     return num1 + num2
 
 def get_one_news():
@@ -24,11 +24,11 @@ def get_one_news():
     return operations.getOneNews()
 
 def get_news_summaries_for_user(user_id, page_num):
-    print("get_news_summaries_for_user is called with %s and %s" %(user_id, page_num))
+    print(("get_news_summaries_for_user is called with %s and %s" %(user_id, page_num)))
     return operations.getNewsSummariesForUser(user_id, page_num)
 
 def log_news_click_for_user(user_id, news_id):
-    print("log_news_click_for_user is called with %s and %s" %(user_id, news_id))
+    print(("log_news_click_for_user is called with %s and %s" %(user_id, news_id)))
     return operations.logNewsClickForUser(user_id, news_id)
 
 def search_news(keyword, page_num):
