@@ -1,4 +1,4 @@
-jsonrpclib-pelix
+jsonrpclib-pelix==0.3.1
 pymongo
 pika
 requests
@@ -9,5 +9,5 @@ sklearn
 scipy
 python-dateutil
 pandas
-tensorflow
+tensorflow==1.15.2
 watchdog

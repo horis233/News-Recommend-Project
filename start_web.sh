@@ -1,10 +1,5 @@
 #!/bin/bash
 
-#fuser -k 4040/tcp
-#fuser -k 5050/tcp
-#fuser -k 6060/tcp
-
-
 cd backend_server
 python3 service.py&
 

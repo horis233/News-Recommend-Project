@@ -96,7 +96,7 @@ def classify(text):
         p['class'] for p in classifier.predict(
             predict_x, as_iterable=True)
     ]
-    print(y_predicted[0])
+    print((y_predicted[0]))
     topic = news_classes.class_map[str(y_predicted[0])]
     return topic
 

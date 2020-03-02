@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
+mongoose.set('useCreateIndex', true);
+
 module.exports.connect = (uri) => {
-  mongoose.connect(uri);
+  mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, retryWrites=false });
 
   mongoose.connection.on('error', (err) => {
     console.error(`Mongoose connection error: ${err}`);

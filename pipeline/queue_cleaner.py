@@ -23,7 +23,7 @@ def clearQueue(queue_url, queue_name):
         if scrape_news_queue_client is not None:
             msg = scrape_news_queue_client.getMessage()
             if msg is None:
-                print("Cleared %d messages." % num_of_messages)
+                print(("Cleared %d messages." % num_of_messages))
                 return
             num_of_messages += 1
 

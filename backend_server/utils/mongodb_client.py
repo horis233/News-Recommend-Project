@@ -1,13 +1,14 @@
 from pymongo import MongoClient
 
-MONGO_DB_URL = "mongodb://horis233:horis233@ds029496.mlab.com:29496/horis_tapnews"
-MONGO_DB_HOST = "ds029496.mlab.com"
-MONGO_DB_PORT = 29496
-DB_NAME = "horis_tapnews"
-DB_USER = "horis233"
-DB_PASS = "horis233"
+MONGO_DB_URL = "mongodb://admin:letmein123@ds045897.mlab.com:45897/news"
+MONGO_DB_HOST = "ds045897.mlab.com"
+MONGO_DB_PORT = 45897
 
-client = MongoClient(MONGO_DB_HOST, MONGO_DB_PORT)
+DB_NAME = "news"
+DB_USER = "admin"
+DB_PASS = "letmein123"
+
+client = MongoClient(MONGO_DB_HOST, MONGO_DB_PORT, retryWrites = False)
 
 def get_db(db = DB_NAME):
   db = client[db]

@@ -36,7 +36,7 @@ class NewsPanel extends React.Component {
       return;
     }
 
-    let url = 'https://' + window.location.hostname +
+    let url = 'http://' + window.location.hostname + ':3000' + 
       '/news/userId/' + Auth.getEmail() + '/pageNum/' + this.state.pageNum;
 
     let request = new Request(encodeURI(url), {
