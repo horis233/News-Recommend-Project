@@ -1,7 +1,5 @@
 # TOP News: Real Time News Scraping and Recommendation System
 
-- [Demo](http://ec2-18-211-41-221.compute-1.amazonaws.com/)
-
 * Implemented a data pipeline which monitors, scrapes and dedupes latest news (MongoDB, Redis, RabbitMQ);
 * Designed data monitors for obtaining latest news from famous websites and recommend to web server.
 * Successfully fetch useful data from original news websites by building news scrapers.
