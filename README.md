@@ -12,5 +12,3 @@ Build a single-page web.
 
 ## Data Visualization Page for Top News
 * Implemented a data Visualization System (D3.js);
-
-//TODO update machine learning models
